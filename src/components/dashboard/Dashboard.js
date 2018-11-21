@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './dashboard.css';
 import Voucher from '../voucher/Voucher';
+import Header from '../header/Header';
+import './dashboard.css';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -42,19 +43,21 @@ class Dashboard extends Component {
   }
 
   payWithRave(e) {
-    const voucherId =  e.target.dataset.id;
+    const {voucherid: voucherId, vouchername: voucherName} =  e.target.dataset;
+    const {user} = this.state;
     var flw_ref = '';
     var PBFKey = 'FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X';
-    const email = this.state.user.email;
+    const email = user.email;
     const txRef = 'MG-1498408604222';
     const amount = e.target.dataset.amt.slice(1);
-    const user = this.state.user;
+    const firstName = user.displayName.split(' ')[0]
+    const lastName = user.displayName.split(' ')[1]
     let saveTransaction = this.saveTransaction;
     window.getpaidSetup({
       PBFPubKey: PBFKey,
       customer_email: email,
-      customer_firstname: "Temi",
-      customer_lastname: "Adelewa",
+      customer_firstname: `${firstName}`,
+      customer_lastname: `${lastName}`,
       amount: amount,
       customer_phone: "",
       country: "NG",
@@ -66,16 +69,13 @@ class Dashboard extends Component {
          flw_ref = response.tx.flwRef;// collect flwRef returned and pass to a 					server page to complete status check.
       console.log("This is the response returned after a charge", response);
       if(response.tx.chargeResponseCode =='00' || response.tx.chargeResponseCode == '0') {
-        // redirect to a success page
-        console.log('transaction complete');
         const voucher = {
-          userId: user.googleId, 
-          voucherId,
           amount: response.tx.amount,
-          id: response.tx.id
+          id: response.tx.id,
+          name: voucherName,
+          voucherId
         };
         console.log(voucher);
-        
         saveTransaction(voucher);
       } else {
         // redirect to a failure page.
@@ -98,6 +98,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="">
+        <Header isLoggedIn={true} />
         <section className="details user-details">
           <div className="user-detail-card">
             <span className="user-detail-title">Name :</span> 

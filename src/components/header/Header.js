@@ -6,26 +6,23 @@ import './header.css';
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.isLoggedIn = this.props.isLoggedIn;
     console.log(this.props);
   }
 
   render() {
     let currentDisplay = this.props.isLoggedIn 
-     ? <Button className="logout-btn" onClick={this.logout()}>Logout</Button>
+     ? <Button className="logout-btn" onClick={() => window.location = `${window.location.href}/api/logout`}>Logout</Button>
      : '';
     return (
       <div>
         <header>
         <Link 
-          to={this.props.isLoggedIn ? '/dashboard' : '/'}
+          to={'/'}
           className="banner" 
         >
           Voucher Pay
         </Link>
-        <div className="right">
           {currentDisplay}
-        </div>
       </header>
       </div>
     );

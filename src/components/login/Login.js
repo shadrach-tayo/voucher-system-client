@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Input, Button } from 'react-materialize';
+
+import Header from '../header/Header';
 import './login.css';
 
 class Login extends Component {
@@ -30,7 +32,9 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="login-card">
+      <div>
+        <Header isLoggedIn={false} />
+        <div className="login-card">
         <h1>Login Or Signup</h1>
         <form id="signUpForm">
           <Input type="text" id="username" placeholder="Username" s={6} validate required/>
@@ -40,6 +44,7 @@ class Login extends Component {
         </form>
         <p>OR</p>
         <Button onClick={this.googleSignIn}>Sign in with Google</Button>
+      </div>
       </div>       
     );
   }

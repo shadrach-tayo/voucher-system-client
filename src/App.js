@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
-import Header from './components/header/Header';
 import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
 
@@ -16,7 +15,7 @@ class App extends Component {
     this.getUser = this.getUser.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getUser().then(user => {
       console.log('user is :', user);
       this.setState({user, isloggedIn: true});
@@ -25,8 +24,15 @@ class App extends Component {
   }
 
   getUser() {
-    return fetch('api/current_user')
-      .then(res => res.json())
+    return fetch('/api/current_user', {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    })
+      .then(res => {
+        console.log(res);
+        return res.json()
+      })
       .catch(err => console.log('user not loggedIn: ', err))
   }
 
@@ -35,10 +41,10 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <div>
-            <Header isloggedIn={this.state.isloggedIn} />
-            <Route exact path="/" component={Login} />
-            <Route exact path="/dashboard" render={() => <Dashboard/>} />
-            {/* <Route path="/dashboard/wallet" exact={() => <Wallet /> }/> */}
+            {
+              this.state.user ? <Route path="/" render={() => <Dashboard/>} />
+              : <Route exact path="/" component={() => <Login />} />
+            }
           </div>
         </BrowserRouter>
       </div>

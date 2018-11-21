@@ -9,7 +9,7 @@ const Voucher = (props) => {
           <img className="voucher-image" src={voucherImage} alt={voucher.name}/>
           <h4 className="voucher-name">{voucher.name}</h4>
           <p className="voucher-price">{voucher.price}</p>
-          <button className="voucher-btn" data-id={voucher.id} data-amt={voucher.price} onClick={click}>Buy Now</button>
+          <button className="voucher-btn" data-voucherid={voucher.id} data-amt={voucher.price} data-vouchername={voucher.name} onClick={click}>Buy Now</button>
         </div>
   );
 }

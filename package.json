@@ -3,11 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/auth/google": {
-      "target": "https://voucher-system-prod.appspot.com"
-    },
-    "/api/*": {
-      "target": "https://voucher-system-prod.appspot.com"
+    "/*": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
