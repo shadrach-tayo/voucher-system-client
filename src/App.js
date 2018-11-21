@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
 import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import Header from './components/header/Header';
+
+const Vouchercart = () => (
+  <div>
+    <h1>Welcome to Vouchercart</h1>
+  </div>
+)
 
 class App extends Component {
   constructor() {
@@ -12,18 +19,16 @@ class App extends Component {
       user: null
     }
 
-    this.getUser = this.getUser.bind(this);
   }
 
   componentDidMount() {
     this.getUser().then(user => {
-      console.log('user is :', user);
       this.setState({user, isloggedIn: true});
     });
     console.log(this.state);
   }
 
-  getUser() {
+  getUser = () => {
     return fetch('/api/current_user', {
       headers: {
         'Access-Control-Allow-Origin': '*'
@@ -37,14 +42,17 @@ class App extends Component {
   }
 
   render() {
+    const cartItems = this.state.user ? this.state.user.vouchers.length : 0;
+    const currentHomeComponent = 
+      this.state.user 
+        ? <Route path="/" render={() => <Dashboard user={this.state.user} cartItems={cartItems}/>} />
+        : <Route exact path="/" component={() => <Login />} />
     return (
       <div>
+        {/* <Header isloggedIn={this.state.isloggedIn} cartItems={cartItems}/> */}
         <BrowserRouter>
           <div>
-            {
-              this.state.user ? <Route path="/" render={() => <Dashboard/>} />
-              : <Route exact path="/" component={() => <Login />} />
-            }
+            {currentHomeComponent}
           </div>
         </BrowserRouter>
       </div>

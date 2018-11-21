@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-materialize';
-import { Link } from 'react-router-dom';
+import { Button, Badge } from 'react-materialize';
 import './header.css';
 
 class Header extends Component {
@@ -10,19 +9,19 @@ class Header extends Component {
   }
 
   render() {
-    let currentDisplay = this.props.isLoggedIn 
-     ? <Button className="logout-btn" onClick={() => window.location = `${window.location.href}api/logout`}>Logout</Button>
+    const logoutButton = this.props.isLoggedIn 
+     ? <Button className="logout-btn purple" onClick={() => window.location = `${window.location.href}api/logout`}>Logout</Button>
      : '';
     return (
       <div>
         <header>
-        <Link 
-          to={'/'}
+        <a 
+          href={'/'}
           className="banner" 
         >
           Voucher Pay
-        </Link>
-          {currentDisplay}
+        </a>
+          {logoutButton}
       </header>
       </div>
     );

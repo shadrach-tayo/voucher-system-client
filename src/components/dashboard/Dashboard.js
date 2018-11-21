@@ -1,50 +1,36 @@
 import React, { Component } from 'react';
 import Voucher from '../voucher/Voucher';
 import Header from '../header/Header';
+import { Button } from 'react-materialize';
 import './dashboard.css';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: '',
-      vouchers: []
+      vouchers: [],
+      displayUserVouchers: false
     }
-
-    this.payWithRave = this.payWithRave.bind(this);
-    this.saveTransaction = this.saveTransaction.bind(this);
   }
 
   componentWillMount() {
-    this.getUser().then(user => {
-      console.log('user returned: ', user);
-      this.setState({...this.state, user});
-    });
-
     this.getAllVouchers().then(response => {
       const vouchers = response;
       this.setState((state) => ({
         ...state,
         ...vouchers
       }))
-      console.log(this.state);
     })
   }
 
-  getUser() {
-    return fetch('api/current_user')
-      .then(res => res.json())
-      .catch(err => console.log('user not loggedIn: ', err))
-  }
-
-  getAllVouchers() {
+  getAllVouchers = () => {
     return fetch('api/vouchers').then(res => res.json())
     .catch(err => console.log(err))
   }
 
-  payWithRave(e) {
+  payWithRave = (e) => {
     const {voucherid: voucherId, vouchername: voucherName} =  e.target.dataset;
-    const {user} = this.state;
+    const {user} = this.props;
     var flw_ref = '';
     var PBFKey = 'FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X';
     const email = user.email;
@@ -92,33 +78,83 @@ class Dashboard extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(voucher)
-    }).then(res => console.log(res));
+    }).then(() => window.location.reload());
+  }
+
+  showAvailableVouchers() {
+    return (
+      <section className="voucher-list">
+      <h1>Available Vouchers</h1>
+      <div className="details">
+        { 
+          this.state.vouchers.map((voucher, i) => {
+            return <Voucher key={i} voucher={voucher} click={this.payWithRave}/>
+          })
+        }
+      </div>
+    </section>
+    )
+  }
+
+  
+  showUserVouchers(vouchers) {
+    const cartLength = vouchers.length;
+    return (
+      <div>
+        <h1>
+          {cartLength ? 
+            <section className="voucher-list">
+              <h1>Purchased Vouchers</h1>
+              <div className="details">
+                { 
+                  vouchers.map((voucher, i) => {
+                    return <Voucher key={i} voucher={voucher} isDeletable={true} onDelete={this.deleteVoucher}/>
+                  })
+                }
+              </div>
+            </section>
+            : <p>You have no vouchers yet!</p>}
+        </h1>
+      </div>
+    )
+  }
+
+  deleteVoucher = (e) => {
+    const {voucherid: id} = e.target.dataset;
+    const voucher = this.props.user.vouchers.filter(voucher => voucher.id !== id)[0];
+    console.log('voucher to delete: ', voucher);
+    fetch(`voucher/${id}`, {
+      method: 'DELETE'
+    }).then(res => {
+      console.log(res);
+      window.location.reload();
+    })
+  }
+
+
+  toggleUserVoucherDisplay = () => {
+    this.setState({displayUserVouchers: !this.state.displayUserVouchers})
   }
 
   render() {
+    const {user} = this.props;
+    const currentVoucherDisplay = this.state.displayUserVouchers ? this.showUserVouchers(user.vouchers) : this.showAvailableVouchers();
+    const toggleButtonContent = this.state.displayUserVouchers ? 'Available Vouchers' : 'Purchased Vouchers';
     return (
       <div className="">
-        <Header isLoggedIn={true} />
+        <Header isLoggedIn={true} userVouchers={user.vouchers.length}/>
         <section className="details user-details">
           <div className="user-detail-card">
-            <span className="user-detail-title">Name :</span> 
-            {this.state.user.displayName}
+            <span className="user-detail-title">Signed in as : </span> 
+            {user.displayName}
           </div>
           <div className="user-detail-card">
-            <span className="user-detail-title">Email :</span> 
-            {this.state.user.email}
+            <span className="user-detail-title">Active email : </span> 
+            {user.email}
           </div>
+          <Button onClick={this.toggleUserVoucherDisplay}>{toggleButtonContent}</Button>
         </section>
-        <section className="voucher-list">
-          <h1>Featured vouchers</h1>
-          <div className="details">
-            { 
-              this.state.vouchers.map((voucher, i) => {
-                return <Voucher key={i} voucher={voucher} click={this.payWithRave}/>
-              })
-            }
-          </div>
-        </section>
+        {currentVoucherDisplay}
       </div>
     );
   }
