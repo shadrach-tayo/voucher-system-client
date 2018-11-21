@@ -11,7 +11,7 @@ class Header extends Component {
 
   render() {
     let currentDisplay = this.props.isLoggedIn 
-     ? <Button className="logout-btn" onClick={() => window.location = `${window.location.href}/api/logout`}>Logout</Button>
+     ? <Button className="logout-btn" onClick={() => window.location = `${window.location.href}api/logout`}>Logout</Button>
      : '';
     return (
       <div>
