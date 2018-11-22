@@ -5,12 +5,17 @@ import './header.css';
 class Header extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+  }
+
+  handleLogout = () => {
+    fetch('api/logout').then(res => {
+      window.location.reload();
+    })
   }
 
   render() {
     const logoutButton = this.props.isLoggedIn 
-     ? <Button className="logout-btn purple" onClick={() => window.location = `${window.location.href}api/logout`}>Logout</Button>
+     ? <Button className="logout-btn purple" onClick={this.handleLogout}>Logout</Button>
      : '';
     return (
       <div>

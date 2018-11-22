@@ -3,13 +3,7 @@ import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
 import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
-import Header from './components/header/Header';
-
-const Vouchercart = () => (
-  <div>
-    <h1>Welcome to Vouchercart</h1>
-  </div>
-)
+// import Header from './components/header/Header';
 
 class App extends Component {
   constructor() {

@@ -2,6 +2,10 @@
   "name": "Voucher-system",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "5.5.1",
+    "node": "9.3.0"
+  },
   "proxy": {
     "/*": {
       "target": "http://localhost:5000"

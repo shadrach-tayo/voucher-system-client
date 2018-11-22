@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button } from 'react-materialize';
+import { Button } from 'react-materialize';
 
 import Header from '../header/Header';
 import './login.css';
@@ -18,6 +18,15 @@ class Login extends Component {
 
   googleSignIn() {
     window.location = 'auth/google';
+    // fetch('auth/google', {
+    //   headers: {
+    //     'Access-Control-Allow-Origin': '*'
+    //   },
+    //   mode: 'no-cors'
+    // }).then(res => {
+    //   console.log(res);
+    //   window.location.reload();
+    // })
   }
 
   render() {
