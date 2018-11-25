@@ -1,11 +1,12 @@
 html {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  font-size: 65.5%;
+  font-size: 20px;
+  /* font-size: 65.5%; */
   background: white;
 }

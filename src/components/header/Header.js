@@ -8,9 +8,11 @@ class Header extends Component {
   }
 
   handleLogout = () => {
-    fetch('api/logout').then(res => {
-      window.location.reload();
-    })
+    // fetch('/api/logout').then((res) => {
+    //   console.log(res);
+    //   window.location.pathname = '/';
+    // })
+    window.location.pathname = 'api/logout';
   }
 
   render() {
