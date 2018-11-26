@@ -68,6 +68,7 @@ class Login extends Component {
       })
       .then(res => res.json())
       .then(res => {
+        console.log(res);
         if(!res.success) {
           this.setState({LoginError: res.message})
         }
@@ -204,5 +205,3 @@ class Login extends Component {
 }
 
 export default Login;
-/* <Button className="red login-btn" onClick={this.googleSignIn}>Sign in with Google</Button>
-<Button className="blue login-btn" onClick={this.googleSignIn}>Sign in with Twitter</Button> */

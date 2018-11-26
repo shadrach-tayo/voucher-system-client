@@ -5,7 +5,10 @@ import './header.css';
 class Header extends Component {
 
   handleLogout = () => {
-    window.location.pathname = 'api/logout';
+    fetch('api/logout').then(res => {
+      console.log(res);
+      window.location.reload();
+    })
   }
 
   render() {
