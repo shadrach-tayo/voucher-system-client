@@ -1,18 +1,7 @@
 import React, { Component } from "react";
-import firebase from "firebase";
-import { Button, Input } from "react-materialize";
+import { Button, Input} from "react-materialize";
 import Header from "../header/Header";
 import "./login.css";
-
-var config = {
-  apiKey: "AIzaSyBiS4uhTLJ9nyvYraWlfp-2ONr23DBpuqA",
-  authDomain: "voucher-system-221216.firebaseio.com",
-  databaseURL: "https://voucher-system-221216.firebaseio.com",
-  projectId: "voucher-system-221216",
-  storageBucket: "voucher-system-221216.appspot.com",
-  messagingSenderId: "523304708732"
-};
-firebase.initializeApp(config);
 
 class Login extends Component {
   constructor(props) {
@@ -24,8 +13,12 @@ class Login extends Component {
       password: " ",
       confirmPassword: " ",
       LoginError: '',
-      signUpError: ''
+      signUpError: '',
+      signUpPasswordError: ''
     };
+
+    // set document title to login
+    document.title = 'Voucher system | Login'    
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -57,25 +50,11 @@ class Login extends Component {
     this.setState({ confirmPassword: value });
   }
 
-  googleSignIn() {
-    // const provider = new firebase.auth.GoogleAuthProvider();
-    // const promise = firebase.auth().signInWithPopup(provider);
-    // promise
-    //   .then(result => {
-    //     console.log("auth result is: ", result);
-    //     // TODO: SEND USER PROFILE TO SERVER AND SAVE
-    //     // SAVE USER TO
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    window.location = "auth/google";
-  }
-
-  handleLogin() {
+  handleLogin(e) {
+    e.preventDefault();
     if (this.state.email !== " " && this.state.password !== " ") {
       let data = {
-        email: this.state.email,
+        email: this.state.email.toLocaleLowerCase().trim(),
         password: this.state.password
       };
       console.log(data);
@@ -89,19 +68,26 @@ class Login extends Component {
       })
       .then(res => res.json())
       .then(res => {
-        console.log(res)
         if(!res.success) {
           this.setState({LoginError: res.message})
         }
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
-        this.setState({LoginError: err}) 
+        this.setState({LoginError: "Cannot login: check you internet connectivity"})
       })
+    } else {
+      this.setState({LoginError: 'email or password cannot be empty'})
     }
   }
   
-  handleSignUp() {
+  handleSignUp(e) {
+    e.preventDefault();
+    this.setState({
+      signUpError: '',
+      signUpPasswordError: ''
+    })
     if (
       this.state.username !== " " &&
       this.state.password !== " " &&
@@ -109,7 +95,7 @@ class Login extends Component {
     ) {
       if (this.state.password !== this.state.confirmPassword) {
         this.setState({
-          signUpError: "password and confirm password not equal"
+          signUpPasswordError: "password and confirm password not equal"
         });
         return;
       }
@@ -119,7 +105,6 @@ class Login extends Component {
         password: this.state.password,
         confirmPassword: this.state.confirmPassword
       };
-      console.log(data);
       fetch("api/signup", {
         method: "POST",
         headers: {
@@ -129,72 +114,89 @@ class Login extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res)
-          if(!res.success) {
+          if(res.success === false) {
             this.setState({signUpError: res.message})
           }
           window.location.reload();
         })
         .catch(err => {
-          console.error(err)
-          this.setState({signUpError: err})
+          this.setState({signUpError: "Cannot login: check you internet connectivity"})
         })
+    } else {
+      this.setState({signUpError: 'Fields cannot be empty'})
     }
   }
 
   render() {
-    const {signUpError, LoginError} = this.state;
+    const {signUpError, LoginError, signUpPasswordError} = this.state;
     return (
       <div>
         <Header isLoggedIn={false} />
-        <div className="login-card">
-          {/* <Button className="red login-btn" onClick={this.googleSignIn}>
-            Sign in with Google
-          </Button> */}
-          <h3>Login</h3>
-          {LoginError && <p>{LoginError}</p>}
-          <Input
-            type="email"
-            name="email"
-            placeholder="sample@gmail.com"
-            onChange={this.handleEmailChange}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={this.handlePasswordChange}
-          />
-          <Button onClick={this.handleLogin}>Login</Button>
-          <h3>Sign up</h3>
-          {
-            signUpError && <p className="error">signUpError</p>
-          }
-          <Input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={this.handleUsernameChange}
-          />
-          <Input
-            type="email"
-            name="email"
-            placeholder="sample@gmail.com"
-            onChange={this.handleEmailChange}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={this.handlePasswordChange}
-          />
-          <Input
-            type="password"
-            name="confirm"
-            placeholder="confirm"
-            onChange={this.handleConfirmPasswordChange}
-          />
-          <Button onClick={this.handleSignUp}>Sign up</Button>
+        <div className="form-container">
+          <div className="login-card">
+            {/* <Button className="red login-btn" onClick={this.googleSignIn}>
+              Sign in with Google
+            </Button> */}
+            <h3>Login</h3>
+            <form onSubmit={this.handleLogin}>
+              {LoginError && <p className="form-error">{LoginError}</p>}
+              <Input
+                type="email"
+                name="email"
+                placeholder="sample@gmail.com"
+                onChange={this.handleEmailChange}
+                required
+              />
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.handlePasswordChange}
+                required
+              />
+              <Button onClick={this.handleLogin}>Login</Button>
+            </form>
+          </div>
+          <div className="login-card">
+            <form onSubmit={this.handleSignUp}>
+              <h3>Sign up</h3>
+              {
+                signUpError && <p className="form-error">{signUpError}</p>
+              }
+              {
+                signUpPasswordError && <p className="form-error">{signUpPasswordError}</p>
+              }
+              <Input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={this.handleUsernameChange}
+                required
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="sample@gmail.com"
+                onChange={this.handleEmailChange}
+                required
+              />
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={this.handlePasswordChange}
+                required
+              />
+              <Input
+                type="password"
+                name="confirm"
+                placeholder="confirm password"
+                onChange={this.handleConfirmPasswordChange}
+                required
+              />
+              <Button onClick={this.handleSignUp}>Sign up</Button>
+            </form>
+          </div>
         </div>
       </div>
     );

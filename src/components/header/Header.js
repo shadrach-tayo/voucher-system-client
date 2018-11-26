@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Badge } from 'react-materialize';
+import { Button } from 'react-materialize';
 import './header.css';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleLogout = () => {
-    // fetch('/api/logout').then((res) => {
-    //   console.log(res);
-    //   window.location.pathname = '/';
-    // })
     window.location.pathname = 'api/logout';
   }
 

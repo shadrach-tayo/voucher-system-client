@@ -12,14 +12,23 @@ class Dashboard extends Component {
       vouchers: [],
       displayUserVouchers: false
     };
+
+    this.getUser = this.getUser.bind(this);
+    this.payWithRave = this.payWithRave.bind(this);
+    this.deleteVoucher = this.deleteVoucher.bind(this);
+    this.getAllVouchers = this.getAllVouchers.bind(this);
+    this.saveTransaction = this.saveTransaction.bind(this);
+    this.showUserVouchers = this.showUserVouchers.bind(this);
+    this.showAvailableVouchers = this.showAvailableVouchers.bind(this);
   }
 
   componentDidMount() {
-    console.log("component will mount");
     this.getUser().then(user => {
       console.log('user is: ', user);
       if (user) {
         this.setState({ user });
+        // set document title to display username
+        document.title = `Voucher System | ${user.username}`
       }
     });
 
@@ -90,7 +99,7 @@ class Dashboard extends Component {
             voucherId
           };
           console.log(voucher);
-          saveTransaction(voucher);
+          saveTransaction(voucher)
         } else {
           // redirect to a failure page.
           console.log("transaction failed");
@@ -100,13 +109,17 @@ class Dashboard extends Component {
   };
 
   saveTransaction(voucher) {
-    fetch("api/voucher", {
+    return fetch("api/voucher", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(voucher)
-    }).then(() => window.location.reload());
+    }).then(res => res.json())
+    .then(({user}) => {
+      console.log('user :', user)
+      window.location.reload();
+    })
   }
 
   showAvailableVouchers() {
@@ -145,7 +158,7 @@ class Dashboard extends Component {
               </div>
             </section>
           ) : (
-            <p>You have no vouchers yet!</p>
+            <h2>You have no vouchers yet!</h2>
           )}
       </div>
     );
@@ -159,10 +172,15 @@ class Dashboard extends Component {
     console.log("voucher to delete: ", voucher);
     fetch(`voucher/${id}`, {
       method: "DELETE"
-    }).then(res => {
+    })
+    .then(res => res.json())
+    .then(res => {
       console.log(res);
-      window.location.reload();
-    });
+      if(res.success) {
+        window.location.reload();
+      }
+    })
+    .catch(err => console.error(err))
   };
 
   toggleUserVoucherDisplay = () => {

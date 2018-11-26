@@ -1,15 +1,6 @@
-body {
-  background: white;
-  font-size: 65.5%;
-}
 
-h1 {
-  font-size: 1rem;
+h1, h2, h3, h4, h5 {
   text-align: center;
-}
-
-.container {
-  padding: 20px;
 }
 
 .details {
