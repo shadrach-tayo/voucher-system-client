@@ -28,6 +28,7 @@ class Dashboard extends Component {
       if (user) {
         this.setState({ user });
         // set document title to display username
+        
         document.title = `Voucher System | ${user.username}`;
       }
     });

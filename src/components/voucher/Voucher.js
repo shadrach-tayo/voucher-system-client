@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-materialize";
-import voucherImage from "../../images/voucher-image.jpg";
+import fallbackImage from "../../images/voucher-image.jpg";
 import "./voucher.css";
 import "../dashboard/dashboard.css";
 
@@ -19,7 +19,7 @@ const images = importAll(
 class Voucher extends React.Component {
   constructor(props) {
     super(props);
-    this.image = images[`${this.props.voucher.imageurl}`];
+    this.image = images[`${this.props.voucher.imageurl}`] || fallbackImage;
   }
 
   renderVoucher(voucher = this.props.voucher) {
