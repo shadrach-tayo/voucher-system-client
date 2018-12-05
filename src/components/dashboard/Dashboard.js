@@ -24,11 +24,11 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getUser().then(user => {
-      console.log('user is: ', user);
+      console.log("user is: ", user);
       if (user) {
         this.setState({ user });
         // set document title to display username
-        document.title = `Voucher System | ${user.username}`
+        document.title = `Voucher System | ${user.username}`;
       }
     });
 
@@ -62,7 +62,12 @@ class Dashboard extends Component {
   };
 
   payWithRave = e => {
-    const { voucherid: voucherId, vouchername: voucherName } = e.target.dataset;
+    const {
+      voucherid: voucherId,
+      vouchername: voucherName,
+      url: imageurl
+    } = e.target.dataset;
+    console.log(e.target.dataset);
     const { user } = this.state;
     var flw_ref = "";
     var PBFKey = "FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X";
@@ -96,10 +101,11 @@ class Dashboard extends Component {
             amount: response.tx.amount,
             id: response.tx.id,
             name: voucherName,
-            voucherId
+            voucherId,
+            imageurl
           };
           console.log(voucher);
-          saveTransaction(voucher)
+          saveTransaction(voucher);
         } else {
           // redirect to a failure page.
           console.log("transaction failed");
@@ -115,11 +121,12 @@ class Dashboard extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(voucher)
-    }).then(res => res.json())
-    .then(({user}) => {
-      console.log('user :', user)
-      window.location.reload();
     })
+      .then(res => res.json())
+      .then(({ user }) => {
+        console.log("user :", user);
+        window.location.reload();
+      });
   }
 
   showAvailableVouchers() {
@@ -141,25 +148,25 @@ class Dashboard extends Component {
     const cartLength = vouchers.length;
     return (
       <div>
-          {cartLength ? (
-            <section className="voucher-list">
-              <h2 style={{textAlign: 'center'}}>Purchased Vouchers</h2>
-              <div className="details">
-                {vouchers.map((voucher, i) => {
-                  return (
-                    <Voucher
-                      key={i}
-                      voucher={voucher}
-                      isDeletable={true}
-                      onDelete={this.deleteVoucher}
-                    />
-                  );
-                })}
-              </div>
-            </section>
-          ) : (
-            <h2>You have no vouchers yet!</h2>
-          )}
+        {cartLength ? (
+          <section className="voucher-list">
+            <h2 style={{ textAlign: "center" }}>Purchased Vouchers</h2>
+            <div className="details">
+              {vouchers.map((voucher, i) => {
+                return (
+                  <Voucher
+                    key={i}
+                    voucher={voucher}
+                    isDeletable={true}
+                    onDelete={this.deleteVoucher}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        ) : (
+          <h2>You have no vouchers yet!</h2>
+        )}
       </div>
     );
   }
@@ -173,14 +180,14 @@ class Dashboard extends Component {
     fetch(`voucher/${id}`, {
       method: "DELETE"
     })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res);
-      if(res.success) {
-        window.location.reload();
-      }
-    })
-    .catch(err => console.error(err))
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.success) {
+          window.location.reload();
+        }
+      })
+      .catch(err => console.error(err));
   };
 
   toggleUserVoucherDisplay = () => {
