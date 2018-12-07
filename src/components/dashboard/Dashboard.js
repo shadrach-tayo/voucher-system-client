@@ -24,18 +24,15 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getUser().then(user => {
-      console.log("user is: ", user);
       if (user) {
         this.setState({ user });
         // set document title to display username
-        
         document.title = `Voucher System | ${user.username}`;
       }
     });
 
     this.getAllVouchers().then(response => {
       const vouchers = response;
-      console.log(vouchers);
       this.setState(state => ({
         ...state,
         ...vouchers
@@ -50,7 +47,6 @@ class Dashboard extends Component {
       }
     })
       .then(res => {
-        console.log(res);
         return res.json();
       })
       .catch(err => console.log("user not loggedIn: ", err));
@@ -68,7 +64,6 @@ class Dashboard extends Component {
       vouchername: voucherName,
       url: imageurl
     } = e.target.dataset;
-    console.log(e.target.dataset);
     const { user } = this.state;
     var flw_ref = "";
     var PBFKey = "FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X";
@@ -105,7 +100,6 @@ class Dashboard extends Component {
             voucherId,
             imageurl
           };
-          console.log(voucher);
           saveTransaction(voucher);
         } else {
           // redirect to a failure page.
@@ -125,7 +119,6 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then(({ user }) => {
-        console.log("user :", user);
         window.location.reload();
       });
   }
@@ -174,10 +167,6 @@ class Dashboard extends Component {
 
   deleteVoucher = e => {
     const { voucherid: id } = e.target.dataset;
-    const voucher = this.state.user.vouchers.filter(
-      voucher => voucher.id !== id
-    )[0];
-    console.log("voucher to delete: ", voucher);
     fetch(`voucher/${id}`, {
       method: "DELETE"
     })

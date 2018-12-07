@@ -6,7 +6,6 @@ class Header extends Component {
 
   handleLogout = () => {
     fetch('api/logout').then(res => {
-      console.log(res);
       window.location.reload();
     })
   }

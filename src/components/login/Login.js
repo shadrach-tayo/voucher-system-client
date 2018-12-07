@@ -57,7 +57,6 @@ class Login extends Component {
         email: this.state.email.toLocaleLowerCase().trim(),
         password: this.state.password
       };
-      console.log(data);
       fetch("api/login", {
         method: "POST",
         headers: {
@@ -68,9 +67,8 @@ class Login extends Component {
       })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if(!res.success) {
-          this.setState({LoginError: res.message})
+          return this.setState({LoginError: res.message})
         }
         window.location.reload();
       })
@@ -116,11 +114,12 @@ class Login extends Component {
         .then(res => res.json())
         .then(res => {
           if(res.success === false) {
-            this.setState({signUpError: res.message})
+            return this.setState({signUpError: res.message})
           }
           window.location.reload();
         })
         .catch(err => {
+          console.error(err);
           this.setState({signUpError: "Cannot login: check you internet connectivity"})
         })
     } else {
@@ -135,9 +134,6 @@ class Login extends Component {
         <Header isLoggedIn={false} />
         <div className="form-container">
           <div className="login-card">
-            {/* <Button className="red login-btn" onClick={this.googleSignIn}>
-              Sign in with Google
-            </Button> */}
             <h3>Login</h3>
             <form onSubmit={this.handleLogin}>
               {LoginError && <p className="form-error">{LoginError}</p>}
