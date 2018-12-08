@@ -46,10 +46,12 @@ class Dashboard extends Component {
         "Access-Control-Allow-Origin": "*"
       }
     })
-      .then(res => {
-        return res.json();
-      })
-      .catch(err => console.log("user not loggedIn: ", err));
+    .then(res => {
+      console.log(res);
+      if(res.status === 204) return null
+      return res.json();
+    })
+    .catch(err => console.log("user not loggedIn: ", err));
   };
 
   getAllVouchers = () => {
@@ -70,7 +72,6 @@ class Dashboard extends Component {
     const email = user.email;
     const txRef = "MG-1498408604222";
     const amount = e.target.dataset.amt.slice(1);
-    // const firstName = user.displayName.split(" ")[0];
     const firstName = user.username;
     const lastName = user.username;
     let saveTransaction = this.saveTransaction;
@@ -174,7 +175,7 @@ class Dashboard extends Component {
       .then(res => {
         console.log(res);
         if (res.success) {
-          window.location.reload();
+          return window.location.reload();
         }
       })
       .catch(err => console.error(err));
