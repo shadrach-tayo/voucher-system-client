@@ -16,12 +16,12 @@ class Header extends Component {
      : '';
     return (
       <div>
-        <header>
+        <header className={this.props.isLoggedIn ? 'header' : 'header__banner'}>
         <a 
           href={'/'}
           className="banner" 
         >
-          Voucher Pay
+          E-Voucher Pay
         </a>
           {logoutButton}
       </header>

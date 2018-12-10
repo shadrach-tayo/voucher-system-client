@@ -1,3 +1,14 @@
+.pitch-text {
+  text-align: center;
+  padding: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .pitch-text {
+    font-size: 2rem;
+  }
+}
+
 .form-container {
   width: 100%;
   margin: 20px auto;
@@ -19,10 +30,10 @@
   width: 350px;
   margin: 20px auto;
   padding:  20px 10px;
-  background: white;
+  background: rgba(255, 255, 255, 0.89);
   box-shadow: 0 1px 10px 2px rgba(0, 0, 0, .3);
   border-radius: 10px;
-  color: black;
+  color: #999999;
   text-align: center;
 }
 
@@ -31,6 +42,10 @@
 }
 
 @media screen and (max-width: 400px) {
+  .login-page {
+    height: 100vh;
+  }
+
   .login-card {
     width: 90%;
     border-radius: 0;

@@ -3,6 +3,7 @@ import { BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import Footer from './components/footer/Footer';
 
 class App extends Component {
   constructor() {
@@ -45,6 +46,7 @@ class App extends Component {
             {currentHomeComponent}
           </div>
         </BrowserRouter>
+        <Footer />
       </div>
     );
   }

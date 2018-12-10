@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { Button, Input} from "react-materialize";
 import Header from "../header/Header";
 import "./login.css";
+import background from '../../images/background.jpg';
+
+const buttonStyles = {
+  background: 'rgb(113, 19, 160)',
+}
 
 class Login extends Component {
   constructor(props) {
@@ -130,8 +135,10 @@ class Login extends Component {
   render() {
     const {signUpError, LoginError, signUpPasswordError} = this.state;
     return (
-      <div>
+      <div className="login-page" style={{background: `url(${background})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100%'}}>
         <Header isLoggedIn={false} />
+        <h3 className="pitch-text">Welcome to E-Voucher Pay</h3>
+        <h4 className="pitch-text">Login or Sign Up to ptart purchasing your favorite vouchers today.</h4>
         <div className="form-container">
           <div className="login-card">
             <h3>Login</h3>
@@ -151,7 +158,7 @@ class Login extends Component {
                 onChange={this.handlePasswordChange}
                 required
               />
-              <Button onClick={this.handleLogin}>Login</Button>
+              <Button onClick={this.handleLogin} style={buttonStyles}>Login</Button>
             </form>
           </div>
           <div className="login-card">
@@ -191,7 +198,7 @@ class Login extends Component {
                 onChange={this.handleConfirmPasswordChange}
                 required
               />
-              <Button onClick={this.handleSignUp}>Sign up</Button>
+              <Button onClick={this.handleSignUp} style={buttonStyles}>Sign up</Button>
             </form>
           </div>
         </div>

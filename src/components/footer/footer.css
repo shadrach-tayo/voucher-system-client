@@ -1,0 +1,23 @@
+footer {
+  background-color: rgb(13, 12, 14);
+  width: 100%;
+  padding: 1px 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  letter-spacing: .03rem;
+}
+
+.footer__text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #dddddd;  
+}
+
+.footer__link {
+  color: #ffffff;  
+  font-weight: bold;
+  text-decoration: none;
+}
