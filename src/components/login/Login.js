@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Button, Input} from "react-materialize";
-import Header from "../header/Header";
 import "./login.css";
 import background from '../../images/background.jpg';
 

@@ -20,7 +20,6 @@ class App extends Component {
         this.setState({user, isloggedIn: true});
       }
     });
-    console.log(this.state);
   }
 
   getUser = () => {
@@ -29,7 +28,6 @@ class App extends Component {
         'Access-Control-Allow-Origin': '*'
       }
     }).then(res => {
-        console.log(res);
         return res.json()
       }).catch(err => console.log('user not loggedIn: ', err))
   }

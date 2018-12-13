@@ -22,3 +22,9 @@ footer {
   font-weight: bold;
   text-decoration: none;
 }
+
+.social {
+  width: 20px;
+  height: 20px;
+  margin: 0 10px 0;
+}
