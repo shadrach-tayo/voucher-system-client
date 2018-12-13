@@ -3,7 +3,7 @@ import './footer.css';
 
 const Footer = () => (
   <footer>
-    <p className="footer__text">Made with love by <a href="https://github.com/shadrach-tayo" target="_blank" className="footer__link">shadrach</a></p>
+    <p className="footer__text">Made with love by <a href="https://github.com/shadrach-tayo" target="_blank" rel="noopener noreferrer" className="footer__link">shadrach</a></p>
   </footer>
 )
 

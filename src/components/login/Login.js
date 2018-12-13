@@ -136,9 +136,9 @@ class Login extends Component {
     const {signUpError, LoginError, signUpPasswordError} = this.state;
     return (
       <div className="login-page" style={{background: `url(${background})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100%'}}>
-        <Header isLoggedIn={false} />
+        {/* <Header isLoggedIn={false} /> */}
         <h3 className="pitch-text">Welcome to E-Voucher Pay</h3>
-        <h4 className="pitch-text">Login or Sign Up to ptart purchasing your favorite vouchers today.</h4>
+        {/* <h4 className="pitch-text">Login or Sign Up to ptart purchasing your favorite vouchers today.</h4> */}
         <div className="form-container">
           <div className="login-card">
             <h3>Login</h3>

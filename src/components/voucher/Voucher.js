@@ -24,7 +24,7 @@ class Voucher extends React.Component {
 
   renderVoucher(voucher = this.props.voucher) {
     return (
-      <div className="detail-card" aria-label={voucher.name}>
+      <div className="voucher-card" aria-label={voucher.name}>
         <img className="voucher-image" src={this.image} alt={voucher.name} />
         <h4 className="voucher-name">{voucher.name}</h4>
         <p className="voucher-price">{voucher.price}</p>
@@ -36,7 +36,7 @@ class Voucher extends React.Component {
           data-vouchername={voucher.name}
           onClick={this.props.click}
         >
-          Buy Now
+          BUY ITEM
         </button>
       </div>
     );
@@ -44,7 +44,7 @@ class Voucher extends React.Component {
 
   renderAsDeletable(voucher = this.props.voucher) {
     return (
-      <div className="detail-card" aria-label={voucher.name}>
+      <div className="voucher-card" aria-label={voucher.name}>
         <img
           className="voucher-image"
           src={images[`${voucher.imageurl}`]}

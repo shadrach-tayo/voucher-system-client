@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
-import { Button } from "react-materialize";
 import "./dashboard.css";
 
 class Dashboard extends Component {
@@ -126,9 +125,9 @@ class Dashboard extends Component {
 
   showAvailableVouchers() {
     return (
-      <section className="voucher-list">
-        <h2>Available Vouchers</h2>
-        <div className="details">
+      <section className="voucher-contain">
+        <div className="voucher-filter"></div>
+        <div className="voucher-list">
           {this.state.vouchers.map((voucher, i) => {
             return (
               <Voucher key={i} voucher={voucher} click={this.payWithRave} />
@@ -142,11 +141,11 @@ class Dashboard extends Component {
   showUserVouchers(vouchers) {
     const cartLength = vouchers.length;
     return (
-      <div>
+      <div className="voucher-contain">
         {cartLength ? (
           <section className="voucher-list">
-            <h2 style={{ textAlign: "center" }}>Purchased Vouchers</h2>
-            <div className="details">
+            {/* <h2 style={{ textAlign: "center" }}>Purchased Vouchers</h2> */}
+            <div className="voucher-list">
               {vouchers.map((voucher, i) => {
                 return (
                   <Voucher
@@ -190,26 +189,12 @@ class Dashboard extends Component {
     const currentVoucherDisplay = this.state.displayUserVouchers
       ? this.showUserVouchers(user.vouchers)
       : this.showAvailableVouchers();
-    const toggleButtonContent = this.state.displayUserVouchers
-      ? "Available Vouchers"
-      : "Purchased Vouchers";
     return (
       <div className="">
-        <Header isLoggedIn={true} userVouchers={user.vouchers.length} />
-        <section className="details user-details">
-          <div className="user-detail-card">
-            <span className="user-detail-title">Signed in as : </span>
-            {user.username}
-          </div>
-          <div className="user-detail-card">
-            <span className="user-detail-title">Active email : </span>
-            {user.email}
-          </div>
-          <Button onClick={this.toggleUserVoucherDisplay}>
-            {toggleButtonContent}
-          </Button>
-        </section>
-        {currentVoucherDisplay}
+        <Header isLoggedIn={true} userDisplay={user.email} cartLength={user.vouchers.length} showCart={this.toggleUserVoucherDisplay}/>
+        <main className="contain">
+            {currentVoucherDisplay}
+        </main>
       </div>
     );
   }

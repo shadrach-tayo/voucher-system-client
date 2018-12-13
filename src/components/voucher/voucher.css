@@ -1,21 +1,27 @@
 .voucher-name {
-  font-weight: 600;
-  text-transform: uppercase;
+  font-size: 1rem;
   margin: 0;
 }
 
 .voucher-image {
   width: 80%;
+  height: 60%;
   margin: 0;
+  margin-bottom: 10px;
+  justify-self: center;
+  align-self: center;
 }
 
 .voucher-btn {
-  padding: 10px 20px;
+  justify-self: center;
+  align-self: center;
+  padding: 8px 18px;
   margin: 0;
-  background: purple;
-  color: white;
-  font-size: 1.2rem;
-  border: none;
+  background: #ffffff;
+  color: rgb(105, 13, 105);
+  font-size: 1rem;
+  font-weight: bold;
+  border: 1px solid rgb(105, 13, 105);
   border-radius: 30px;
   box-shadow: 0 0px 20px 2px rgba(0, 0, 0, 0.2);
   transition: all .2s;
@@ -23,13 +29,24 @@
 
 .voucher-btn:hover,
 .voucher-btn:focus {
-  background: rgb(204, 31, 204);
+  color: #ffffff;
+  background: rgb(105, 13, 105);
   box-shadow: 0 0px 10px 1px rgba(0, 0, 0, 0.2);
 }
 
 .voucher-price {
+  justify-self: center;
+  align-self: center;
   font-weight: bold;
   font-size: 14px;
   letter-spacing: 2px;
   color: firebrick;
+}
+
+
+@media screen and (max-width: 400px) {
+  .voucher-image {
+    height: 150px;
+  }
+  
 }

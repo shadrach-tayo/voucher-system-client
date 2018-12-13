@@ -1,6 +1,7 @@
 .pitch-text {
   text-align: center;
   padding: 10px;
+  margin: 0;
 }
 
 @media screen and (max-width: 400px) {
