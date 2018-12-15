@@ -1,3 +1,9 @@
+.header--container {
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
 header {
   width: 100vw;
   height: 57px;
@@ -14,11 +20,11 @@ header {
 
 .banner {
   font-family: 'Lobster', cursive;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: white;
-  letter-spacing: 2px;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .header__right {
@@ -98,7 +104,7 @@ header {
   margin-right: 5px;
 }
 
-.signout__btn {
+.dropdown {
   display: none;
   margin-right: 5px;
   background: transparent;
@@ -140,7 +146,7 @@ header {
     display: none;
   }
 
-  .signout__btn {
+  .dropdown {
     display: block;
   }
 

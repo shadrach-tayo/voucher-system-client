@@ -1,12 +1,12 @@
 .voucher-name {
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin: 0;
 }
 
 .voucher-image {
   width: 80%;
-  height: 60%;
-  max-height: 100px;
+  height: 80%;
+  max-height: 150px;
   margin: 0;
   margin-bottom: 10px;
   justify-self: center;
@@ -16,7 +16,7 @@
 .voucher-btn {
   justify-self: center;
   align-self: center;
-  padding: 8px 18px;
+  padding: 10px 20px;
   margin: 0;
   background: #ffffff;
   color: rgb(105, 13, 105);
@@ -24,8 +24,11 @@
   font-weight: bold;
   border: 1px solid rgb(105, 13, 105);
   border-radius: 30px;
-  /* box-shadow: 0 0px 20px 2px rgba(0, 0, 0, 0.2); */
   transition: all .2s;
+}
+
+.delete-btn {
+  
 }
 
 .voucher-btn:hover,
@@ -39,7 +42,7 @@
   justify-self: center;
   align-self: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 1rem;
   letter-spacing: 1px;
   color: rgb(139, 14, 211);
 }

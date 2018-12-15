@@ -45,11 +45,11 @@ class Dashboard extends Component {
         "Access-Control-Allow-Origin": "*"
       }
     })
-    .then(res => {
-      if(res.status === 204) return null
-      return res.json();
-    })
-    .catch(err => console.log("user not loggedIn: ", err));
+      .then(res => {
+        if (res.status === 204) return null;
+        return res.json();
+      })
+      .catch(err => console.log("user not loggedIn: ", err));
   };
 
   getAllVouchers = () => {
@@ -86,7 +86,7 @@ class Dashboard extends Component {
       //integrity_hash: hashedValue, // pass the sha256 hashed value here.
       onclose: function() {},
       callback: function(response) {
-        flw_ref = response.tx.flwRef; // collect flwRef returned and pass to a 					server page to complete status check.
+        flw_ref = response.tx.flwRef; // collect flwRef returned and pass to a server page to complete status check.
         console.log("This is the response returned after a charge", response);
         if (
           response.tx.chargeResponseCode == "00" ||
@@ -125,7 +125,6 @@ class Dashboard extends Component {
   showAvailableVouchers() {
     return (
       <section className="voucher-contain">
-        <div className="voucher-filter"></div>
         <div className="voucher-list">
           {this.state.vouchers.map((voucher, i) => {
             return (
@@ -142,21 +141,18 @@ class Dashboard extends Component {
     return (
       <div className="voucher-contain">
         {cartLength ? (
-          <section className="voucher-list">
-            {/* <h2 style={{ textAlign: "center" }}>Purchased Vouchers</h2> */}
-            <div className="voucher-list">
-              {vouchers.map((voucher, i) => {
-                return (
-                  <Voucher
-                    key={i}
-                    voucher={voucher}
-                    isDeletable={true}
-                    onDelete={this.deleteVoucher}
-                  />
-                );
-              })}
-            </div>
-          </section>
+          <div className="voucher-list">
+            {vouchers.map((voucher, i) => {
+              return (
+                <Voucher
+                  key={i}
+                  voucher={voucher}
+                  isDeletable={true}
+                  onDelete={this.deleteVoucher}
+                />
+              );
+            })}
+          </div>
         ) : (
           <h2>You have no vouchers yet!</h2>
         )}
@@ -171,7 +167,6 @@ class Dashboard extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         if (res.success) {
           return window.location.reload();
         }
@@ -189,11 +184,16 @@ class Dashboard extends Component {
       ? this.showUserVouchers(user.vouchers)
       : this.showAvailableVouchers();
     return (
-      <div className="">
-        <Header isLoggedIn={true} userDisplay={user.email} cartLength={user.vouchers.length} showCart={this.toggleUserVoucherDisplay}/>
-        <main className="contain">
-            {currentVoucherDisplay}
-        </main>
+      <div>
+        <Header
+          isLoggedIn={true}
+          userDisplay={user.email}
+          cartLength={user.vouchers.length}
+          showCart={this.toggleUserVoucherDisplay}
+        />
+        <div className="wrapper">
+          <main className="contain">{currentVoucherDisplay}</main>
+        </div>
       </div>
     );
   }

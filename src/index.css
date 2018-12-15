@@ -1,7 +1,9 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   padding: 0;
-  /* background-color: rgba(119, 85, 197, 0.445); */
   font-family: Barlow, Helvetical, sans-serif;
   overflow-x: hidden;
 }

@@ -40,9 +40,9 @@ class App extends Component {
     return (
       <div>
         <BrowserRouter>
-          <div>
+          {/* <div> */}
             {currentHomeComponent}
-          </div>
+          {/* </div> */}
         </BrowserRouter>
         <Footer />
       </div>

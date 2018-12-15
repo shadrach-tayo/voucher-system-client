@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Button } from 'react-materialize';
 import './header.css';
 import logo from '../../images/logo-small.jpg';
 
@@ -15,7 +14,7 @@ class Header extends Component {
   render() {
     const displayName = this.props.userDisplay;
     const logoutButton = this.props.isLoggedIn
-     ? <Button className="purple" onClick={this.handleLogout}>Sign out</Button>
+     ? <button className="btn voucher-btn" onClick={this.handleLogout}>Sign out</button>
      : '';
     const userProps = this.props.isLoggedIn ?
       (
@@ -26,7 +25,7 @@ class Header extends Component {
               {logoutButton}
             </div>
           </div>
-          <div className="user-action signout__btn" tabIndex={0}>
+          <div className="user-action dropdown" tabIndex={0}>
             {logoutButton}
           </div>
           <button className="user-action cart-avatar" onClick={this.props.showCart}>
@@ -37,20 +36,22 @@ class Header extends Component {
     return (
       <div>
         <header className={this.props.isLoggedIn ? 'header' : 'header__banner'}>
-        <div className="header__left">
-          <a 
-            href={'/'}
-            className="banner" 
-          >
-            E-Voucher Pay
-          </a>
-          <img 
-            src={logo}
-            alt="logo"
-            className="logo" 
-          />
-        </div>
-        {userProps}
+          <div className="header--container">
+            <div className="header__left">
+              <a 
+                href={'/'}
+                className="banner" 
+              >
+                E-Voucher Pay
+              </a>
+              <img 
+                src={logo}
+                alt="logo"
+                className="logo" 
+              />
+            </div>
+            {userProps}
+          </div>
       </header>
       </div>
     );

@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-materialize";
 import fallbackImage from "../../images/voucher-image.jpg";
 import "./voucher.css";
 import "../dashboard/dashboard.css";
@@ -51,15 +50,14 @@ class Voucher extends React.Component {
           alt={voucher.name}
         />
         <h4 className="voucher-name">{voucher.name}</h4>
-        <h4 className="voucher-price">Amount: {voucher.amount}</h4>
         <h4 className="voucher-price">Code: {voucher.id}</h4>
-        <Button
-          className="voucher-btn red"
+        <button
+          className="voucher-btn delete-btn"
           data-voucherid={voucher.id}
           onClick={this.props.onDelete}
         >
           Delete
-        </Button>
+        </button>
       </div>
     );
   }
