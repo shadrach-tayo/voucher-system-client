@@ -19,7 +19,7 @@ header {
 }
 
 .banner {
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
   font-size: 1.5rem;
   font-weight: 500;
   color: white;
@@ -43,6 +43,9 @@ header {
 }
 
 .user-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 10px;
   position: relative;
   background: #ffffff;
@@ -56,7 +59,7 @@ header {
   color: purple;
   cursor: pointer;
   outline: none;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .user-action > a {
@@ -71,7 +74,7 @@ header {
   left: 0;
   padding: 8px 10px;
   margin: 0 auto;
-  margin-top: 15px;
+  margin-top: 50px;
   background: #ffffff;
   box-shadow: 0 2px 20px 2px rgba(192, 113, 113, 0.2);
   box-sizing: border-box;
@@ -81,21 +84,19 @@ header {
   font-weight: 500;
   color: purple;
   cursor: pointer;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .user-action:focus {
   background-color: rgb(113, 19, 160);
 }
 
-.user-action:focus > .user-action__dropdown,
-.user-action:hover > .user-action__dropdown {
+.user-action:hover > .user-action__dropdown,
+.user-action:focus > .user-action__dropdown {
   display: block;
 }
 
-
-
-.user-action__dropdown:focus, 
+.user-action__dropdown:focus,
 .user-action__dropdown > *:focus {
   display: block;
 }
@@ -112,13 +113,17 @@ header {
   border: none;
 }
 
+.logout-btn {
+  margin: 0 auto;
+}
+
 .logo {
   display: none;
 }
 
 .cart-avatar {
   background: none;
-  background-image: url('../../images/shopping-cart.svg');
+  background-image: url("../../images/shopping-cart.svg");
   background-size: 80%;
   background-position: center center;
   background-repeat: no-repeat;

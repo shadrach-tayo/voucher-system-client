@@ -20,15 +20,11 @@
   margin: 0;
   background: #ffffff;
   color: rgb(105, 13, 105);
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   border: 1px solid rgb(105, 13, 105);
   border-radius: 30px;
-  transition: all .2s;
-}
-
-.delete-btn {
-  
+  transition: all 0.2s;
 }
 
 .voucher-btn:hover,
@@ -47,10 +43,8 @@
   color: rgb(139, 14, 211);
 }
 
-
 @media screen and (max-width: 400px) {
   .voucher-image {
     height: 150px;
   }
-  
 }
