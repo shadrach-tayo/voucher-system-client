@@ -7,7 +7,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: null,
+      user: this.props.user,
       vouchers: [],
       displayUserVouchers: false
     };
@@ -22,12 +22,9 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    document.title = `Voucher System | ${this.props.user.username}`;
     this.getUser().then(user => {
-      if (user) {
-        this.setState({ user });
-        // set document title to display username
-        document.title = `Voucher System | ${user.username}`;
-      }
+      console.log("getting user in dashbaord: ", user);
     });
 
     this.getAllVouchers().then(response => {
@@ -49,7 +46,7 @@ class Dashboard extends Component {
         if (res.status === 204) return null;
         return res.json();
       })
-      .catch(err => console.log("user not loggedIn: ", err));
+      .catch(err => console.log("dashboard error: ", err));
   };
 
   getAllVouchers = () => {
@@ -180,6 +177,7 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props;
+    console.log("dashboard state: ", this.state);
     const currentVoucherDisplay = this.state.displayUserVouchers
       ? this.showUserVouchers(user.vouchers)
       : this.showAvailableVouchers();
@@ -187,6 +185,7 @@ class Dashboard extends Component {
       <div>
         <Header
           isLoggedIn={true}
+          onLogout={this.props.onLogout}
           userDisplay={user.email}
           cartLength={user.vouchers.length}
           showCart={this.toggleUserVoucherDisplay}
