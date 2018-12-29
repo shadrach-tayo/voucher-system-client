@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import "./header.css";
 import logo from "../../images/logo-small.jpg";
 import dropArrow from "../../images/down-arrow.svg";
-import React, { Component } from "react";
 import { history } from "../../App";
-import "./header.css";
-import logo from "../../images/logo-small.jpg";
 
 class Header extends Component {
   handleLogout = () => {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
 import "./dashboard.css";
+import { leftArrow } from "../../images/left-arrow.svg";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -135,8 +136,14 @@ class Dashboard extends Component {
 
   showUserVouchers(vouchers) {
     const cartLength = vouchers.length;
+    console.log("user vouchers");
     return (
       <div className="voucher-contain">
+        <button
+          className="back-btn"
+          onClick={this.toggleUserVoucherDisplay}
+          aria-describedby="click to go back"
+        />
         {cartLength ? (
           <div className="voucher-list">
             {vouchers.map((voucher, i) => {
@@ -177,7 +184,6 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props;
-    console.log("dashboard state: ", this.state);
     const currentVoucherDisplay = this.state.displayUserVouchers
       ? this.showUserVouchers(user.vouchers)
       : this.showAvailableVouchers();

@@ -1,6 +1,5 @@
 body {
   background: rgba(159, 151, 161, 0.479);
-
 }
 
 .wrapper {
@@ -20,7 +19,29 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
+  grid-gap: 20px;
   justify-content: center;
+}
+
+.back-btn {
+  box-sizing: content-box;
+  width: 50px;
+  height: 30px;
+  padding: 10px;
+  background-color: #ffffff;
+  background-image: url("../../images/left-arrow.svg");
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: none;
+  border-radius: 10px;
+  margin-left: calc(30px + (24 - 16) * (100vw - 600px) / (1200 - 600));
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover,
+.back-btn:focus {
+  background-color: #aaaaaa;
 }
 
 .voucher-filter {
@@ -62,18 +83,16 @@ body {
 
 @media screen and (min-width: 1500px) {
   .contain {
-    width:  70%;
+    width: 70%;
     margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 1064px) {
-
   .voucher-list {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
   }
-
 }
 
 @media screen and (max-width: 754px) {
@@ -97,14 +116,11 @@ body {
   .voucher-card {
     width: 80%;
   }
-  
 }
 
 @media screen and (max-width: 400px) {
- 
   .voucher-filter,
   .voucher-card {
     width: 100%;
   }
-  
 }
