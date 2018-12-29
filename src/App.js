@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Router, Switch } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
-import "./App.css";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Footer from "./components/footer/Footer";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+import "./App.css";
 
 export const history = createHistory();
 
@@ -19,31 +19,11 @@ class App extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.getUser().then(user => {
-  //     this.setState({ user });
-  //   });
-  // }
-
-  // getUser = () => {
-  //   return fetch("/api/current_user", {
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "*"
-  //     }
-  //   })
-  //     .then(res => {
-  //       if (res.status === 204) return null;
-  //       return res.json();
-  //     })
-  //     .catch(err => console.log("dashboard error: ", err));
-  // };
-
   onLogin = () => {
     this.props.onLogin();
   };
 
   onLogout = () => {
-    console.log("logging user out");
     this.setState({ isAuth: false, user: null });
     history.push("/");
   };
@@ -53,7 +33,6 @@ class App extends Component {
       <div>
         <Router history={history}>
           <div>
-            {/* <Route exact path="/" component={() => <Login />} /> */}
             <Switch>
               <PublicRoute
                 exact
@@ -69,10 +48,6 @@ class App extends Component {
                   <Dashboard user={this.state.user} onLogout={this.onLogout} />
                 )}
               />
-              {/* <Route
-              path="/dashboard"
-              render={() => <Dashboard user={this.state.user} />}
-            /> */}
             </Switch>
           </div>
         </Router>

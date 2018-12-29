@@ -3,8 +3,22 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import loaderGif from "../src/images/loader.gif";
 
-const Loader = () => <div>Loading...</div>;
+const Loader = () => (
+  <div
+    style={{
+      width: "100vw",
+      height: "100vh",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }}
+  >
+    <img src={loaderGif} alt="loading spinner Gif" />
+  </div>
+);
+
 let hasRendered = false;
 
 let authState = { isAuth: false, user: null };
@@ -14,16 +28,14 @@ export const onLogout = () => {
 };
 
 const onLogin = () => {
-  console.log("onLoggedIn called");
+  ReactDOM.render(<Loader />, document.getElementById("root"));
   getUser().then(user => {
-    console.log("getting user on login: ", authState);
     authState = { isAuth: true, user };
     renderApp();
   });
 };
 
 const renderApp = () => {
-  console.log("rendering app -- authState is: ", authState);
   ReactDOM.render(
     <App
       isAuth={authState.isAuth}
@@ -50,7 +62,6 @@ const getUser = () => {
 
 getUser()
   .then(user => {
-    console.log("user is logged in: ", user);
     authState.isAuth = true;
     authState.user = user;
     ReactDOM.render(
@@ -59,7 +70,6 @@ getUser()
     );
   })
   .catch(err => {
-    console.log("rendering login page");
     authState.isAuth = false;
     authState.user = null;
     ReactDOM.render(

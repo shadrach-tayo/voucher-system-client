@@ -13,7 +13,6 @@ class Dashboard extends Component {
       displayUserVouchers: false
     };
 
-    this.getUser = this.getUser.bind(this);
     this.payWithRave = this.payWithRave.bind(this);
     this.deleteVoucher = this.deleteVoucher.bind(this);
     this.getAllVouchers = this.getAllVouchers.bind(this);
@@ -24,9 +23,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     document.title = `Voucher System | ${this.props.user.username}`;
-    this.getUser().then(user => {
-      console.log("getting user in dashbaord: ", user);
-    });
 
     this.getAllVouchers().then(response => {
       const vouchers = response;
@@ -36,19 +32,6 @@ class Dashboard extends Component {
       }));
     });
   }
-
-  getUser = () => {
-    return fetch("/api/current_user", {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
-      .then(res => {
-        if (res.status === 204) return null;
-        return res.json();
-      })
-      .catch(err => console.log("dashboard error: ", err));
-  };
 
   getAllVouchers = () => {
     return fetch("api/vouchers")
@@ -115,7 +98,7 @@ class Dashboard extends Component {
       body: JSON.stringify(voucher)
     })
       .then(res => res.json())
-      .then(({ user }) => {
+      .then(_ => {
         window.location.reload();
       });
   }
@@ -136,7 +119,6 @@ class Dashboard extends Component {
 
   showUserVouchers(vouchers) {
     const cartLength = vouchers.length;
-    console.log("user vouchers");
     return (
       <div className="voucher-contain">
         <button

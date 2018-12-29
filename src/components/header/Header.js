@@ -7,7 +7,6 @@ import { history } from "../../App";
 class Header extends Component {
   handleLogout = () => {
     fetch("api/logout").then(res => {
-      console.log("logging out: ", res);
       this.props.onLogout();
       history.push("/");
     });
