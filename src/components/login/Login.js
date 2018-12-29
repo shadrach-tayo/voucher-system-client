@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Button, Input} from "react-materialize";
+import { Button, Input } from "react-materialize";
+import { history } from "../../App";
 import "./login.css";
-import background from '../../images/background.jpg';
+import background from "../../images/background.jpg";
 
 const buttonStyles = {
-  background: 'rgb(113, 19, 160)',
-}
+  background: "rgb(113, 19, 160)"
+};
 
 class Login extends Component {
   constructor(props) {
@@ -16,13 +17,13 @@ class Login extends Component {
       email: " ",
       password: " ",
       confirmPassword: " ",
-      LoginError: '',
-      signUpError: '',
-      signUpPasswordError: ''
+      LoginError: "",
+      signUpError: "",
+      signUpPasswordError: ""
     };
 
     // set document title to login
-    document.title = 'Voucher system | Login'    
+    document.title = "Voucher system | Login";
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -65,32 +66,35 @@ class Login extends Component {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*"
         },
         body: JSON.stringify(data)
       })
-      .then(res => res.json())
-      .then(res => {
-        if(!res.success) {
-          return this.setState({LoginError: res.message})
-        }
-        window.location.reload();
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({LoginError: "Cannot login: check you internet connectivity"})
-      })
+        .then(res => res.json())
+        .then(res => {
+          if (!res.success) {
+            return this.setState({ LoginError: res.message });
+          }
+          // this.props.onLogin();
+          window.location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            LoginError: "Cannot login: check you internet connectivity"
+          });
+        });
     } else {
-      this.setState({LoginError: 'email or password cannot be empty'})
+      this.setState({ LoginError: "email or password cannot be empty" });
     }
   }
-  
+
   handleSignUp(e) {
     e.preventDefault();
     this.setState({
-      signUpError: '',
-      signUpPasswordError: ''
-    })
+      signUpError: "",
+      signUpPasswordError: ""
+    });
     if (
       this.state.username !== " " &&
       this.state.password !== " " &&
@@ -117,27 +121,37 @@ class Login extends Component {
       })
         .then(res => res.json())
         .then(res => {
-          if(res.success === false) {
-            return this.setState({signUpError: res.message})
+          if (res.success === false) {
+            return this.setState({ signUpError: res.message });
           }
-          window.location.reload();
+          // window.location.reload();
+          console.log(history.location.pathname);
+          history.push("/dashboard");
         })
         .catch(err => {
           console.error(err);
-          this.setState({signUpError: "Cannot login: check you internet connectivity"})
-        })
+          this.setState({
+            signUpError: "Cannot login: check you internet connectivity"
+          });
+        });
     } else {
-      this.setState({signUpError: 'Fields cannot be empty'})
+      this.setState({ signUpError: "Fields cannot be empty" });
     }
   }
 
   render() {
-    const {signUpError, LoginError, signUpPasswordError} = this.state;
+    const { signUpError, LoginError, signUpPasswordError } = this.state;
     return (
-      <div className="login-page" style={{background: `url(${background})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', height: '100%'}}>
-        {/* <Header isLoggedIn={false} /> */}
+      <div
+        className="login-page"
+        style={{
+          background: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          height: "100%"
+        }}
+      >
         <h3 className="pitch-text">Welcome to E-Voucher Pay</h3>
-        {/* <h4 className="pitch-text">Login or Sign Up to ptart purchasing your favorite vouchers today.</h4> */}
         <div className="form-container">
           <div className="login-card">
             <h3>Login</h3>
@@ -157,18 +171,18 @@ class Login extends Component {
                 onChange={this.handlePasswordChange}
                 required
               />
-              <Button onClick={this.handleLogin} style={buttonStyles}>Login</Button>
+              <Button onClick={this.handleLogin} style={buttonStyles}>
+                Login
+              </Button>
             </form>
           </div>
           <div className="login-card">
             <form onSubmit={this.handleSignUp}>
               <h3>Sign up</h3>
-              {
-                signUpError && <p className="form-error">{signUpError}</p>
-              }
-              {
-                signUpPasswordError && <p className="form-error">{signUpPasswordError}</p>
-              }
+              {signUpError && <p className="form-error">{signUpError}</p>}
+              {signUpPasswordError && (
+                <p className="form-error">{signUpPasswordError}</p>
+              )}
               <Input
                 type="text"
                 name="username"
@@ -197,7 +211,9 @@ class Login extends Component {
                 onChange={this.handleConfirmPasswordChange}
                 required
               />
-              <Button onClick={this.handleSignUp} style={buttonStyles}>Sign up</Button>
+              <Button onClick={this.handleSignUp} style={buttonStyles}>
+                Sign up
+              </Button>
             </form>
           </div>
         </div>
