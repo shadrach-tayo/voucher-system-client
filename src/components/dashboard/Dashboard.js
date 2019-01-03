@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
+import { UserContext } from "../../index";
 import "./dashboard.css";
 
 class Dashboard extends Component {
@@ -12,7 +13,6 @@ class Dashboard extends Component {
       displayUserVouchers: false
     };
 
-    this.getUser = this.getUser.bind(this);
     this.payWithRave = this.payWithRave.bind(this);
     this.deleteVoucher = this.deleteVoucher.bind(this);
     this.getAllVouchers = this.getAllVouchers.bind(this);
@@ -22,11 +22,6 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    document.title = `Voucher System | ${this.props.user.username}`;
-    this.getUser().then(user => {
-      console.log("getting user in dashbaord: ", user);
-    });
-
     this.getAllVouchers().then(response => {
       const vouchers = response;
       this.setState(state => ({
@@ -36,32 +31,18 @@ class Dashboard extends Component {
     });
   }
 
-  getUser = () => {
-    return fetch("/api/current_user", {
-      headers: {
-        "Access-Control-Allow-Origin": "*"
-      }
-    })
-      .then(res => {
-        if (res.status === 204) return null;
-        return res.json();
-      })
-      .catch(err => console.log("dashboard error: ", err));
-  };
-
   getAllVouchers = () => {
     return fetch("api/vouchers")
       .then(res => res.json())
       .catch(err => console.log(err));
   };
 
-  payWithRave = e => {
+  payWithRave = (e, user) => {
     const {
       voucherid: voucherId,
       vouchername: voucherName,
       url: imageurl
     } = e.target.dataset;
-    const { user } = this.state;
     var flw_ref = "";
     var PBFKey = "FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X";
     const email = user.email;
@@ -114,7 +95,7 @@ class Dashboard extends Component {
       body: JSON.stringify(voucher)
     })
       .then(res => res.json())
-      .then(({ user }) => {
+      .then(() => {
         window.location.reload();
       });
   }
@@ -125,7 +106,11 @@ class Dashboard extends Component {
         <div className="voucher-list">
           {this.state.vouchers.map((voucher, i) => {
             return (
-              <Voucher key={i} voucher={voucher} click={this.payWithRave} />
+              <Voucher
+                key={i}
+                voucher={voucher}
+                payWithRave={this.payWithRave}
+              />
             );
           })}
         </div>
@@ -133,27 +118,30 @@ class Dashboard extends Component {
     );
   }
 
-  showUserVouchers(vouchers) {
-    const cartLength = vouchers.length;
+  showUserVouchers() {
     return (
-      <div className="voucher-contain">
-        {cartLength ? (
-          <div className="voucher-list">
-            {vouchers.map((voucher, i) => {
-              return (
-                <Voucher
-                  key={i}
-                  voucher={voucher}
-                  isDeletable={true}
-                  onDelete={this.deleteVoucher}
-                />
-              );
-            })}
+      <UserContext.Consumer>
+        {({ user }) => (
+          <div className="voucher-contain">
+            {user.vouchers.length ? (
+              <div className="voucher-list">
+                {user.vouchers.map((voucher, i) => {
+                  return (
+                    <Voucher
+                      key={i}
+                      voucher={voucher}
+                      isDeletable={true}
+                      onDelete={this.deleteVoucher}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <h2>You have no vouchers yet!</h2>
+            )}
           </div>
-        ) : (
-          <h2>You have no vouchers yet!</h2>
         )}
-      </div>
+      </UserContext.Consumer>
     );
   }
 
@@ -176,24 +164,26 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { user } = this.props;
-    console.log("dashboard state: ", this.state);
     const currentVoucherDisplay = this.state.displayUserVouchers
-      ? this.showUserVouchers(user.vouchers)
+      ? this.showUserVouchers()
       : this.showAvailableVouchers();
     return (
-      <div>
-        <Header
-          isLoggedIn={true}
-          onLogout={this.props.onLogout}
-          userDisplay={user.email}
-          cartLength={user.vouchers.length}
-          showCart={this.toggleUserVoucherDisplay}
-        />
-        <div className="wrapper">
-          <main className="contain">{currentVoucherDisplay}</main>
-        </div>
-      </div>
+      <UserContext.Consumer>
+        {({ user, onLogout, isAuth }) => (
+          <Fragment>
+            <Header
+              isLoggedIn={isAuth}
+              onLogout={onLogout}
+              userDisplay={user.email}
+              cartLength={user.vouchers.length}
+              showCart={this.toggleUserVoucherDisplay}
+            />
+            <div className="wrapper">
+              <main className="contain">{currentVoucherDisplay}</main>
+            </div>
+          </Fragment>
+        )}
+      </UserContext.Consumer>
     );
   }
 }
