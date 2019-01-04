@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
+import { UserConsumer } from "../../UserContext";
 import "./dashboard.css";
-import { leftArrow } from "../../images/left-arrow.svg";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user,
       vouchers: [],
       displayUserVouchers: false
     };
@@ -22,8 +21,6 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    document.title = `Voucher System | ${this.props.user.username}`;
-
     this.getAllVouchers().then(response => {
       const vouchers = response;
       this.setState(state => ({
@@ -39,13 +36,12 @@ class Dashboard extends Component {
       .catch(err => console.log(err));
   };
 
-  payWithRave = e => {
+  payWithRave = (e, user) => {
     const {
       voucherid: voucherId,
       vouchername: voucherName,
       url: imageurl
     } = e.target.dataset;
-    const { user } = this.state;
     var flw_ref = "";
     var PBFKey = "FLWPUBK-5b4184669ccdc431a9be3ed86098f516-X";
     const email = user.email;
@@ -98,7 +94,7 @@ class Dashboard extends Component {
       body: JSON.stringify(voucher)
     })
       .then(res => res.json())
-      .then(_ => {
+      .then(() => {
         window.location.reload();
       });
   }
@@ -109,7 +105,11 @@ class Dashboard extends Component {
         <div className="voucher-list">
           {this.state.vouchers.map((voucher, i) => {
             return (
-              <Voucher key={i} voucher={voucher} click={this.payWithRave} />
+              <Voucher
+                key={i}
+                voucher={voucher}
+                payWithRave={this.payWithRave}
+              />
             );
           })}
         </div>
@@ -117,32 +117,30 @@ class Dashboard extends Component {
     );
   }
 
-  showUserVouchers(vouchers) {
-    const cartLength = vouchers.length;
+  showUserVouchers() {
     return (
-      <div className="voucher-contain">
-        <button
-          className="back-btn"
-          onClick={this.toggleUserVoucherDisplay}
-          aria-describedby="click to go back"
-        />
-        {cartLength ? (
-          <div className="voucher-list">
-            {vouchers.map((voucher, i) => {
-              return (
-                <Voucher
-                  key={i}
-                  voucher={voucher}
-                  isDeletable={true}
-                  onDelete={this.deleteVoucher}
-                />
-              );
-            })}
+      <UserConsumer>
+        {({ user }) => (
+          <div className="voucher-contain">
+            {user.vouchers.length ? (
+              <div className="voucher-list">
+                {user.vouchers.map((voucher, i) => {
+                  return (
+                    <Voucher
+                      key={i}
+                      voucher={voucher}
+                      isDeletable={true}
+                      onDelete={this.deleteVoucher}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <h2>You have no vouchers yet!</h2>
+            )}
           </div>
-        ) : (
-          <h2>You have no vouchers yet!</h2>
         )}
-      </div>
+      </UserConsumer>
     );
   }
 
@@ -165,23 +163,16 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { user } = this.props;
     const currentVoucherDisplay = this.state.displayUserVouchers
-      ? this.showUserVouchers(user.vouchers)
+      ? this.showUserVouchers()
       : this.showAvailableVouchers();
     return (
-      <div>
-        <Header
-          isLoggedIn={true}
-          onLogout={this.props.onLogout}
-          userDisplay={user.email}
-          cartLength={user.vouchers.length}
-          showCart={this.toggleUserVoucherDisplay}
-        />
+      <Fragment>
+        <Header showCart={this.toggleUserVoucherDisplay} />
         <div className="wrapper">
           <main className="contain">{currentVoucherDisplay}</main>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

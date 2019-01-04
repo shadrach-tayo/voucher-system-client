@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button, Input } from "react-materialize";
 import { history } from "../../App";
-import "./login.css";
 import background from "../../images/background.jpg";
+import "./login.css";
 
 const buttonStyles = {
   background: "rgb(113, 19, 160)"
@@ -75,7 +75,7 @@ class Login extends Component {
           if (!res.success) {
             return this.setState({ LoginError: res.message });
           }
-          // this.props.onLogin();
+          console.log("successfully loggedIn");
           window.location.reload();
         })
         .catch(err => {
@@ -124,7 +124,6 @@ class Login extends Component {
           if (res.success === false) {
             return this.setState({ signUpError: res.message });
           }
-          // window.location.reload();
           console.log(history.location.pathname);
           history.push("/dashboard");
         })

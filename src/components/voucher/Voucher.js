@@ -1,12 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import fallbackImage from "../../images/voucher-image.jpg";
 import "./voucher.css";
 import "../dashboard/dashboard.css";
+import { UserConsumer } from "../../UserContext";
 
 function importAll(r) {
   let images = {};
   r.keys().map(item => {
-    return images[item.replace("./", "")] = r(item);
+    return (images[item.replace("./", "")] = r(item));
   });
   return images;
 }
@@ -23,21 +24,29 @@ class Voucher extends React.Component {
 
   renderVoucher(voucher = this.props.voucher) {
     return (
-      <div className="voucher-card" aria-label={voucher.name}>
-        <img className="voucher-image" src={this.image} alt={voucher.name} />
-        <h4 className="voucher-name">{voucher.name}</h4>
-        <p className="voucher-price">{voucher.price}</p>
-        <button
-          className="voucher-btn"
-          data-voucherid={voucher.id}
-          data-amt={voucher.price}
-          data-url={voucher.imageurl}
-          data-vouchername={voucher.name}
-          onClick={this.props.click}
-        >
-          BUY ITEM
-        </button>
-      </div>
+      <UserConsumer>
+        {({ user }) => (
+          <div className="voucher-card" aria-label={voucher.name}>
+            <img
+              className="voucher-image"
+              src={this.image}
+              alt={voucher.name}
+            />
+            <h4 className="voucher-name">{voucher.name}</h4>
+            <p className="voucher-price">{voucher.price}</p>
+            <button
+              className="voucher-btn"
+              data-voucherid={voucher.id}
+              data-amt={voucher.price}
+              data-url={voucher.imageurl}
+              data-vouchername={voucher.name}
+              onClick={e => this.props.payWithRave(e, user)}
+            >
+              BUY ITEM
+            </button>
+          </div>
+        )}
+      </UserConsumer>
     );
   }
 
@@ -67,7 +76,7 @@ class Voucher extends React.Component {
     const currentDisplay = isDeletable
       ? this.renderAsDeletable()
       : this.renderVoucher();
-    return <div>{currentDisplay}</div>;
+    return <Fragment>{currentDisplay}</Fragment>;
   }
 }
 
