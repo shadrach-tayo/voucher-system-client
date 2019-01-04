@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
-import { UserContext } from "../../index";
+import { UserConsumer } from "../../index";
 import "./dashboard.css";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.user,
       vouchers: [],
       displayUserVouchers: false
     };
@@ -120,7 +119,7 @@ class Dashboard extends Component {
 
   showUserVouchers() {
     return (
-      <UserContext.Consumer>
+      <UserConsumer>
         {({ user }) => (
           <div className="voucher-contain">
             {user.vouchers.length ? (
@@ -141,7 +140,7 @@ class Dashboard extends Component {
             )}
           </div>
         )}
-      </UserContext.Consumer>
+      </UserConsumer>
     );
   }
 
@@ -168,22 +167,12 @@ class Dashboard extends Component {
       ? this.showUserVouchers()
       : this.showAvailableVouchers();
     return (
-      <UserContext.Consumer>
-        {({ user, onLogout, isAuth }) => (
-          <Fragment>
-            <Header
-              isLoggedIn={isAuth}
-              onLogout={onLogout}
-              userDisplay={user.email}
-              cartLength={user.vouchers.length}
-              showCart={this.toggleUserVoucherDisplay}
-            />
-            <div className="wrapper">
-              <main className="contain">{currentVoucherDisplay}</main>
-            </div>
-          </Fragment>
-        )}
-      </UserContext.Consumer>
+      <Fragment>
+        <Header showCart={this.toggleUserVoucherDisplay} />
+        <div className="wrapper">
+          <main className="contain">{currentVoucherDisplay}</main>
+        </div>
+      </Fragment>
     );
   }
 }

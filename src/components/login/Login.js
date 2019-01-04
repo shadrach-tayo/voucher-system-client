@@ -75,6 +75,7 @@ class Login extends Component {
           if (!res.success) {
             return this.setState({ LoginError: res.message });
           }
+          console.log("successfully loggedIn");
           window.location.reload();
         })
         .catch(err => {

@@ -1,90 +1,75 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { history } from "./App";
 
-export const UserContext = React.createContext();
+const { Provider, Consumer } = React.createContext();
 
-const Loader = () => <div>Loading...</div>;
-let hasRendered = false;
+class UserProvider extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+      isAuth: false,
+      loading: false,
+      onLogin: this.onLogin,
+      onLogout: this.onLogout
+    };
+  }
 
-let authState = { isAuth: false, user: null };
+  componentDidMount() {
+    this.setState({ loading: true });
+    this.getUser()
+      .then(user => {
+        this.setState({ user, isAuth: true, loading: false });
+      })
+      .catch(err => {
+        console.log("loggin error: ", err);
+        this.setState({ loading: false, isAuth: false, user: null });
+      });
+  }
 
-const onLogout = () => {
-  authState = { isAuth: false, user: null };
-  history.push("/");
-};
+  onLogout = () => {
+    this.setState({ user: null, isAuth: false });
+    history.push("/");
+  };
 
-const onLogin = () => {
-  getUser().then(user => {
-    authState = { isAuth: true, user };
-    renderApp();
-  });
-};
+  onLogin = () => {
+    this.setState({ loading: true });
+    this.getUser()
+      .then(user => {
+        this.setState({ user, isAuth: true, loading: false });
+      })
+      .catch(err => {
+        console.log("loggin error: ", err);
+        this.setState({ isAuth: false, loading: false });
+      });
+  };
 
-const renderApp = () => {
-  ReactDOM.render(
-    <UserContext.Provider
-      value={{
-        isAuth: authState.isAuth,
-        user: authState.user,
-        onLogin: onLogin,
-        onLogout: onLogout
-      }}
-    >
-      <App
-        isAuth={authState.isAuth}
-        user={authState.user}
-        onLogin={onLogin}
-        onLogout={onLogout}
-      />
-    </UserContext.Provider>,
-    document.getElementById("root")
-  );
-};
+  getUser = () => {
+    return fetch("api/current_user", {
+      headers: {
+        "Access-Control-Allow-Origin": "*"
+      }
+    }).then(res => res.json());
+  };
 
-if (!hasRendered) {
-  ReactDOM.render(<Loader />, document.getElementById("root"));
-  hasRendered = true;
+  render() {
+    return <Provider value={this.state}>{this.props.children};</Provider>;
+  }
 }
 
-const getUser = () => {
-  return fetch("api/current_user", {
-    headers: {
-      "Access-Control-Allow-Origin": "*"
-    }
-  }).then(res => res.json());
-};
+// const Loader = () => <div>Loading...</div>;
 
-getUser()
-  .then(user => {
-    authState.isAuth = true;
-    authState.user = user;
-    document.title = `Voucher System | ${this.props.user.username}`;
+ReactDOM.render(
+  <UserProvider>
+    <App />
+  </UserProvider>,
+  document.getElementById("root")
+);
 
-    ReactDOM.render(
-      <UserContext.Provider
-        value={{ isAuth: true, user: authState.user, onLogout, onLogin }}
-      >
-        <App isAuth={true} user={user} onLogin={onLogin} onLogout={onLogout} />
-      </UserContext.Provider>,
-      document.getElementById("root")
-    );
-  })
-  .catch(err => {
-    authState.isAuth = false;
-    authState.user = null;
-    console.log(authState);
-    ReactDOM.render(
-      <UserContext.Provider
-        value={{ isAuth: false, user: authState.user, onLogin }}
-      >
-        <App isAuth={false} user={null} onLogin={onLogin} />
-      </UserContext.Provider>,
-      document.getElementById("root")
-    );
-  });
+// registerServiceWorker()
 
-registerServiceWorker();
+export { Consumer as UserConsumer };

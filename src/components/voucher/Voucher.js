@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import fallbackImage from "../../images/voucher-image.jpg";
 import "./voucher.css";
 import "../dashboard/dashboard.css";
-import { UserContext } from "../../index";
+import { UserConsumer } from "../../index";
 
 function importAll(r) {
   let images = {};
@@ -24,7 +24,7 @@ class Voucher extends React.Component {
 
   renderVoucher(voucher = this.props.voucher) {
     return (
-      <UserContext>
+      <UserConsumer>
         {({ user }) => (
           <div className="voucher-card" aria-label={voucher.name}>
             <img
@@ -46,7 +46,7 @@ class Voucher extends React.Component {
             </button>
           </div>
         )}
-      </UserContext>
+      </UserConsumer>
     );
   }
 

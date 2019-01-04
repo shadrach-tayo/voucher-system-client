@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Router, Switch } from "react-router-dom";
 import createHistory from "history/createBrowserHistory";
 import Login from "./components/login/Login";
@@ -6,16 +6,16 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Footer from "./components/footer/Footer";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-import { UserContext } from "./index";
+import { UserConsumer } from "./index";
 import "./App.css";
 
 export const history = createHistory();
 
 function App() {
   return (
-    <UserContext.Consumer>
-      {({ user, isAuth, onLogin, onLogout }) => {
-        console.log(user, isAuth, onLogin, onLogout);
+    <UserConsumer>
+      {({ user, isAuth, onLogin, onLogout, loading }) => {
+        if (loading) return <div>loading...</div>;
         return (
           <Fragment>
             <Router history={history}>
@@ -25,13 +25,13 @@ function App() {
                     exact
                     path="/"
                     isloggedIn={isAuth}
-                    component={<Login />}
+                    component={Login}
                   />
                   <PrivateRoute
                     exact
                     path="/dashboard"
                     isloggedIn={isAuth}
-                    component={<Dashboard />}
+                    component={Dashboard}
                   />
                 </Switch>
               </Fragment>
@@ -40,7 +40,7 @@ function App() {
           </Fragment>
         );
       }}
-    </UserContext.Consumer>
+    </UserConsumer>
   );
 }
 
