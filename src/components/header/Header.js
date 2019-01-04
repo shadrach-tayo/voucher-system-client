@@ -3,8 +3,6 @@ import { history } from "../../App";
 import { UserConsumer } from "../../UserContext";
 import "./header.css";
 import logo from "../../images/logo-small.jpg";
-import dropArrow from "../../images/down-arrow.svg";
-import { history } from "../../App";
 
 class Header extends Component {
   handleLogout = onLogout => {
