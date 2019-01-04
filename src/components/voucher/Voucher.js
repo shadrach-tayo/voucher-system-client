@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import fallbackImage from "../../images/voucher-image.jpg";
 import "./voucher.css";
 import "../dashboard/dashboard.css";
-import { UserConsumer } from "../../index";
+import { UserConsumer } from "../../UserContext";
 
 function importAll(r) {
   let images = {};

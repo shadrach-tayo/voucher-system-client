@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
-import { UserConsumer } from "../../index";
+import { UserConsumer } from "../../UserContext";
 import "./dashboard.css";
 
 class Dashboard extends Component {

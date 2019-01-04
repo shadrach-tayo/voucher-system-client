@@ -6,7 +6,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Footer from "./components/footer/Footer";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-import { UserConsumer } from "./index";
+import { UserConsumer } from "./UserContext";
 import "./App.css";
 
 export const history = createHistory();
@@ -14,7 +14,7 @@ export const history = createHistory();
 function App() {
   return (
     <UserConsumer>
-      {({ user, isAuth, onLogin, onLogout, loading }) => {
+      {({ isAuth, loading }) => {
         if (loading) return <div>loading...</div>;
         return (
           <Fragment>

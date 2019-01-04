@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { history } from "../../App";
-import { UserConsumer } from "../../index";
+import { UserConsumer } from "../../UserContext";
 import "./header.css";
 import logo from "../../images/logo-small.jpg";
 
