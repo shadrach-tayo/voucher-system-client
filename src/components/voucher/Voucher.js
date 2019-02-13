@@ -25,7 +25,7 @@ class Voucher extends React.Component {
   renderVoucher(voucher = this.props.voucher) {
     return (
       <UserConsumer>
-        {({ user, addToCart }) => (
+        {({ addToCart }) => (
           <div className="voucher-card" aria-label={voucher.name}>
             <img
               className="voucher-image"
@@ -63,7 +63,7 @@ class Voucher extends React.Component {
         <button
           className="voucher-btn delete-btn"
           data-voucherid={voucher.id}
-          onClick={this.props.onDelete}
+          onClick={e => this.props.onDelete(voucher.id)}
         >
           Delete
         </button>

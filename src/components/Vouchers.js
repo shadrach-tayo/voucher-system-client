@@ -7,13 +7,18 @@ const Vouchers = () => (
   <Fragment>
     <Header />
     <UserConsumer>
-      {({ user }) => (
+      {({ user, onDelete }) => (
         <div className="wrapper">
           <div className="app--container" style={{ marginBottom: "0px" }}>
             <div className="voucher-list">
               {user.vouchers ? (
                 user.vouchers.map((voucher, i) => (
-                  <Voucher key={i} isDeletable={true} voucher={voucher} />
+                  <Voucher
+                    key={i}
+                    isDeletable={true}
+                    voucher={voucher}
+                    onDelete={onDelete}
+                  />
                 ))
               ) : (
                 <div>You have no vouchers yet!</div>

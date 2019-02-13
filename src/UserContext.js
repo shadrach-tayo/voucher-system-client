@@ -13,6 +13,7 @@ class UserProvider extends Component {
       onLogin: this.onLogin,
       onLogout: this.onLogout,
       addToCart: this.addToCart,
+      onDelete: this.deleteVoucher,
       purchaseCart: this.purchaseCart
     };
   }
@@ -53,6 +54,26 @@ class UserProvider extends Component {
         "Access-Control-Allow-Origin": "*"
       }
     }).then(res => res.json());
+  };
+
+  deleteVoucher = id => {
+    return fetch(`voucher/${id}`, {
+      method: "DELETE"
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw Error("could not delete voucher");
+        }
+        return response.json();
+      })
+      .then(({ user }) => {
+        return this.updateUser();
+      })
+      .catch(error => console.error(error));
+  };
+
+  updateUser = () => {
+    this.getUser().then(user => this.setState({ user }));
   };
 
   addToCart = cartItem => {
@@ -100,11 +121,7 @@ class UserProvider extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
-        this.getUser().then(user => {
-          console.log("user: ", user);
-          this.setState({ user });
-        });
+        this.updateUser();
       })
       .catch(error => console.error(error));
   };
