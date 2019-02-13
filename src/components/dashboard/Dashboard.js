@@ -103,7 +103,7 @@ class Dashboard extends Component {
       : this.showAvailableVouchers();
     return (
       <Fragment>
-        <Header showCart={this.toggleUserVoucherDisplay} />
+        <Header />
         <div className="wrapper">
           <main className="contain">{currentVoucherDisplay}</main>
         </div>

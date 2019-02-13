@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { history } from "../../App";
 import { UserConsumer } from "../../UserContext";
 import "./header.css";
@@ -28,6 +28,9 @@ class Header extends Component {
               </div>
               {isAuth ? (
                 <div className="header__right">
+                  <NavLink to="/vouchers" className="navlink">
+                    my vouchers
+                  </NavLink>
                   <div className="user-action user-display" tabIndex={0}>
                     <span className="user-action__name">{user.email}</span>
                     <div className="user-action__dropdown" tabIndex="0">
@@ -55,11 +58,7 @@ class Header extends Component {
                       ""
                     )}
                   </div>
-                  <Link
-                    to="/cart"
-                    className="user-action cart-avatar"
-                    // onClick={this.props.showCart}
-                  >
+                  <Link to="/cart" className="user-action cart-avatar">
                     <span className="cart-figure">{user.cart.length}</span>
                   </Link>
                 </div>

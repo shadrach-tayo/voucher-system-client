@@ -4,6 +4,7 @@ import createHistory from "history/createBrowserHistory";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Footer from "./components/footer/Footer";
+import Vouchers from "./components/Vouchers";
 import Cart from "./components/cart/Cart";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -53,6 +54,12 @@ function App() {
                     path="/cart"
                     isloggedIn={isAuth}
                     component={Cart}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/vouchers"
+                    isloggedIn={isAuth}
+                    component={Vouchers}
                   />
                 </Switch>
               </Fragment>

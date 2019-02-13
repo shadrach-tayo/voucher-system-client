@@ -42,7 +42,7 @@ const Cart = () => {
       <Header />
       <UserConsumer>
         {({ user, purchaseCart }) => (
-          <div className="cart--container">
+          <div className="app--container">
             {user.cart.length ? (
               <div className="cartlist">
                 {user.cart.map(cartitem => {

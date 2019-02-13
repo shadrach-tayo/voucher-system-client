@@ -27,6 +27,13 @@ header {
   text-decoration: none;
 }
 
+.navlink {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
 .header__right {
   display: flex;
   align-items: center;
