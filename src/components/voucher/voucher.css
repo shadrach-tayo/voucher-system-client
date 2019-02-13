@@ -27,9 +27,6 @@
   transition: all 0.2s;
 }
 
-.delete-btn {
-}
-
 .voucher-btn:hover,
 .voucher-btn:focus {
   color: #ffffff;

@@ -1,7 +1,8 @@
 .cart--container {
-  min-height: 85vh;
-  padding: 20px 10px;
+  min-height: 90vh;
+  padding: 20px 10px 0 10px;
   margin: 0 auto;
+  margin-bottom: -50px;
   background: #eeeeee;
 }
 

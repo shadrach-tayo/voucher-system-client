@@ -1,6 +1,5 @@
 body {
   background: rgba(159, 151, 161, 0.479);
-
 }
 
 .wrapper {
@@ -41,6 +40,7 @@ body {
   grid-gap: 10px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .voucher-card {
@@ -62,18 +62,16 @@ body {
 
 @media screen and (min-width: 1500px) {
   .contain {
-    width:  70%;
+    width: 70%;
     margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 1064px) {
-
   .voucher-list {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
   }
-
 }
 
 @media screen and (max-width: 754px) {
@@ -97,14 +95,11 @@ body {
   .voucher-card {
     width: 80%;
   }
-  
 }
 
 @media screen and (max-width: 400px) {
- 
   .voucher-filter,
   .voucher-card {
     width: 100%;
   }
-  
 }

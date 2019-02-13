@@ -1,16 +1,16 @@
 import React from "react";
 import "./footer.css";
 
-import githubImg from '../../images/github.svg';
-import twitterImg from '../../images/twitter.svg';
-import linkedinImg from '../../images/linkedin.svg';
+import githubImg from "../../images/github.svg";
+import twitterImg from "../../images/twitter.svg";
+import linkedinImg from "../../images/linkedin.svg";
 
 const Footer = () => (
   <footer>
-    <p className="footer__text">
+    <div className="footer__text">
       Made with love by{" "}
       <a
-        href="https://github.com/shadrach-tayo"
+        href="httdivs://github.com/shadrach-tayo"
         rel="noopener noreferrer"
         className="footer__link"
       >
@@ -20,12 +20,16 @@ const Footer = () => (
         <img alt="github icon" className="social github" src={githubImg} />
       </a>
       <a href="https://twitter.com/oloyedeshadrach" rel="noopener noreferrer">
-      <img alt="twitter icon" className="social twitter" src={twitterImg} />
+        <img alt="twitter icon" className="social twitter" src={twitterImg} />
       </a>
       <a href="https://linkedin.com/shadrach-oloyede" rel="noopener noreferrer">
-      <img alt="linkedin icon" className="social linkedin" src={linkedinImg} />
+        <img
+          alt="linkedin icon"
+          className="social linkedin"
+          src={linkedinImg}
+        />
       </a>
-    </p>
+    </div>
   </footer>
 );
 

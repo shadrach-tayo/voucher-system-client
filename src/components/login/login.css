@@ -1,3 +1,8 @@
+.login-page {
+  min-height: 100vh;
+  margin-bottom: -50px;
+}
+
 .pitch-text {
   text-align: center;
   padding: 10px;
@@ -12,9 +17,9 @@
 
 .form-container {
   width: 100%;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 0;
-  display:  grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, 400px);
   grid-gap: 10px;
   align-items: center;
@@ -23,16 +28,16 @@
 
 @media screen and (min-width: 960px) {
   .form-container {
-    width:  85%;
+    width: 85%;
   }
 }
 
 .login-card {
   width: 350px;
   margin: 20px auto;
-  padding:  20px 10px;
+  padding: 20px 10px;
   background: rgba(255, 255, 255, 0.89);
-  box-shadow: 0 1px 10px 2px rgba(0, 0, 0, .3);
+  box-shadow: 0 1px 10px 2px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   color: #999999;
   text-align: center;
@@ -51,7 +56,7 @@
     width: 90%;
     border-radius: 0;
     margin: 0 auto;
-    padding:  10px 10px;
+    padding: 10px 10px;
     box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0);
     opacity: 1;
   }
