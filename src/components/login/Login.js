@@ -126,6 +126,7 @@ class Login extends Component {
           }
           console.log(history.location.pathname);
           history.push("/dashboard");
+          window.location.reload();
         })
         .catch(err => {
           console.error(err);

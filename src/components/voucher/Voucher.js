@@ -25,7 +25,7 @@ class Voucher extends React.Component {
   renderVoucher(voucher = this.props.voucher) {
     return (
       <UserConsumer>
-        {({ user }) => (
+        {({ user, addToCart }) => (
           <div className="voucher-card" aria-label={voucher.name}>
             <img
               className="voucher-image"
@@ -40,9 +40,9 @@ class Voucher extends React.Component {
               data-amt={voucher.price}
               data-url={voucher.imageurl}
               data-vouchername={voucher.name}
-              onClick={e => this.props.payWithRave(e, user)}
+              onClick={e => addToCart(voucher)}
             >
-              BUY ITEM
+              ADD ITEM
             </button>
           </div>
         )}

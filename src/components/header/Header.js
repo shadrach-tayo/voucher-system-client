@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { history } from "../../App";
 import { UserConsumer } from "../../UserContext";
 import "./header.css";
@@ -7,6 +8,7 @@ import logo from "../../images/logo-small.jpg";
 class Header extends Component {
   handleLogout = onLogout => {
     fetch("api/logout").then(res => {
+      console.log(res);
       onLogout();
       history.push("/");
     });
@@ -19,9 +21,9 @@ class Header extends Component {
           <header className={isAuth ? "header" : "header__banner"}>
             <div className="header--container">
               <div className="header__left">
-                <a href={"/"} className="banner">
+                <Link to="/" className="banner">
                   E-Voucher Pay
-                </a>
+                </Link>
                 <img src={logo} alt="logo" className="logo" />
               </div>
               {isAuth ? (
@@ -53,12 +55,13 @@ class Header extends Component {
                       ""
                     )}
                   </div>
-                  <button
+                  <Link
+                    to="/cart"
                     className="user-action cart-avatar"
-                    onClick={this.props.showCart}
+                    // onClick={this.props.showCart}
                   >
-                    <span className="cart-figure">{user.vouchers.length}</span>
-                  </button>
+                    <span className="cart-figure">{user.cart.length}</span>
+                  </Link>
                 </div>
               ) : (
                 ""
