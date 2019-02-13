@@ -7,10 +7,10 @@ import linkedinImg from "../../images/linkedin.svg";
 
 const Footer = () => (
   <footer>
-    <p className="footer__text">
-      Made with love by
+    <div className="footer__text">
+      Made with love by{" "}
       <a
-        href="https://github.com/shadrach-tayo"
+        href="httdivs://github.com/shadrach-tayo"
         rel="noopener noreferrer"
         className="footer__link"
       >
@@ -29,7 +29,7 @@ const Footer = () => (
           src={linkedinImg}
         />
       </a>
-    </p>
+    </div>
   </footer>
 );
 

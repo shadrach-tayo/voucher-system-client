@@ -125,7 +125,7 @@ class Login extends Component {
             return this.setState({ signUpError: res.message });
           }
           console.log(history.location.pathname);
-          history.push("/dashboard");
+          window.location.reload();
         })
         .catch(err => {
           console.error(err);
@@ -146,8 +146,7 @@ class Login extends Component {
         style={{
           background: `url(${background})`,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          height: "100%"
+          backgroundRepeat: "no-repeat"
         }}
       >
         <h3 className="pitch-text">Welcome to E-Voucher Pay</h3>
