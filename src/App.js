@@ -29,7 +29,7 @@ function App() {
                 justifyContent: "center"
               }}
             >
-              <img src={loaderGif} />
+              <img src={loaderGif} alt="Loading indicator" />
             </div>
           );
         return (

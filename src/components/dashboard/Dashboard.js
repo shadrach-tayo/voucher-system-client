@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Voucher from "../voucher/Voucher";
 import Header from "../header/Header";
 import { UserConsumer } from "../../UserContext";
+import { VoucherConsumer } from "../../VoucherContext";
 import "./dashboard.css";
 
 class Dashboard extends Component {
@@ -37,17 +38,15 @@ class Dashboard extends Component {
   showAvailableVouchers() {
     return (
       <section className="voucher-contain">
-        <div className="voucher-list">
-          {this.state.vouchers.map((voucher, i) => {
-            return (
-              <Voucher
-                key={i}
-                voucher={voucher}
-                payWithRave={this.payWithRave}
-              />
-            );
-          })}
-        </div>
+        <VoucherConsumer>
+          {({ vouchers }) => (
+            <div className="voucher-list">
+              {vouchers.map((voucher, i) => {
+                return <Voucher key={i} voucher={voucher} />;
+              })}
+            </div>
+          )}
+        </VoucherConsumer>
       </section>
     );
   }
