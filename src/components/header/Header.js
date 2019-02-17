@@ -4,8 +4,21 @@ import { history } from "../../App";
 import { UserConsumer } from "../../UserContext";
 import "./header.css";
 import logo from "../../images/logo-small.jpg";
+import userAvatar from "../../images/user.svg";
+import dropArrow from "../../images/drop-down-arrow.svg";
 
 class Header extends Component {
+  state = {
+    menuIsOpened: false
+  };
+
+  toggleMenu = () => {
+    this.setState({ menuIsOpened: !this.state.menuIsOpened });
+    this.state.menuIsOpened
+      ? this.menu.classList.add("opened")
+      : this.menu.classList.remove("opened");
+  };
+
   handleLogout = onLogout => {
     fetch("api/logout").then(res => {
       console.log(res);
@@ -28,39 +41,44 @@ class Header extends Component {
               </div>
               {isAuth ? (
                 <div className="header__right">
-                  <NavLink to="/vouchers" className="navlink">
-                    my vouchers
-                  </NavLink>
-                  <div className="user-action user-display" tabIndex={0}>
-                    <span className="user-action__name">{user.email}</span>
-                    <div className="user-action__dropdown" tabIndex="0">
-                      {isAuth ? (
-                        <button
-                          className="btn voucher-btn"
-                          onClick={() => this.handleLogout(onLogout)}
-                        >
-                          Sign out
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-                  <div className="user-action dropdown" tabIndex={0}>
-                    {isAuth ? (
-                      <button
-                        className="btn voucher-btn"
-                        onClick={() => this.handleLogout(onLogout)}
-                      >
-                        Sign out
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
                   <Link to="/cart" className="user-action cart-avatar">
                     <span className="cart-figure">{user.cart.length}</span>
                   </Link>
+                  <div className="user-menu">
+                    <button
+                      className="user-menu__icons"
+                      onClick={this.toggleMenu}
+                      id="user-menu__icons"
+                    >
+                      <img
+                        src={userAvatar}
+                        alt="user avatar"
+                        className="user-menu__avatar"
+                      />
+
+                      <img
+                        src={dropArrow}
+                        alt="dropdown icon"
+                        className="user-menu__dropdown-icon"
+                      />
+                    </button>
+                    <div
+                      className="user-menu__dropdown"
+                      ref={el => (this.menu = el)}
+                    >
+                      <ul>
+                        <li className="user-menu__dropdown-item">
+                          <Link to="/vouchers">vouchers</Link>
+                        </li>
+                        <li
+                          className="user-menu__dropdown-item"
+                          onClick={() => this.handleLogout(onLogout)}
+                        >
+                          Sign out
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 ""

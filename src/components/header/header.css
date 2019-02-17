@@ -7,10 +7,10 @@
 header {
   width: 100vw;
   height: 57px;
-  padding: 10px 20px 10px;
+  padding: 10px 30px 10px;
   box-sizing: border-box;
-  background: rgb(113, 19, 160);
-  box-shadow: 0 2px 10px 2px #f8f4f469;
+  background: #ffffff;
+  box-shadow: 0 5px 20px 10px rgba(0, 0, 0, 0.2));
 }
 
 .header__banner {
@@ -22,7 +22,6 @@ header {
   font-family: "Lobster", cursive;
   font-size: 1.5rem;
   font-weight: 500;
-  color: white;
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -146,6 +145,76 @@ header {
   background: #ffffff;
 }
 
+.user-menu {
+  position: relative;
+}
+
+.user-menu__icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  background: transparent;
+  border: none;
+}
+
+#user-menu__icons:focus {
+  background-color: transparent;
+}
+
+button:focus {
+  background-color: none;
+}
+
+.user-menu__avatar {
+  border-radius: 50%;
+  width: 40px;
+  margin-right: 5px;
+}
+
+.user-menu__dropdown-btn {
+  background: transparent;
+  border: none;
+}
+
+.user-menu__dropdown-icon {
+  width: 20px;
+}
+
+.user-menu__dropdown {
+  position: absolute;
+  padding: 3px 10px;
+  top: 110%;
+  left: -20px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  transition: 0.1s ease-in;
+  will-change: transform;
+  will-change: opacity;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(.8 ,.8);
+}
+
+.opened {
+  opacity: 1;
+  transform: scale(1, 1);
+  visibility: visible;
+}
+.user-menu__dropdown-item {
+  cursor: pointer;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+
+.user-menu__dropdown-item:hover,
+.user-menu__dropdown-item:focus {
+  background: #cccccc;
+}
+
 @media screen and (max-width: 525px) {
   .banner {
     font-size: 1.2rem;
@@ -165,6 +234,10 @@ header {
 
   .header__right {
     padding-right: 10px;
+  }
+
+  .header__right > *:not(:last-child) {
+    margin-right: 10px;
   }
 
   .cart-figure {

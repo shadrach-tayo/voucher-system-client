@@ -6,6 +6,7 @@ body {
   padding: 0;
   height: 100%;
   font-family: Barlow, Helvetical, sans-serif;
+  background: rgba(119, 34, 141, 0.29);
   overflow-x: hidden;
 }
 
@@ -19,8 +20,8 @@ h5 {
 
 .app--container {
   min-height: 90vh;
-  padding: 20px 10px 0 10px;
+  padding: 20px 10px 10px 10px;
   margin: 0 auto;
-  margin-bottom: -50px;
+  /* margin-bottom: -50px; */
   background: #ece7e7;
 }

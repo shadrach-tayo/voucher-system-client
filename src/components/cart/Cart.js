@@ -51,6 +51,7 @@ const Cart = () => {
                 <h4>
                   Total:{" "}
                   {`${user.cart.reduce((sum, voucher) => {
+                    console.log(voucher);
                     sum =
                       Number(sum) +
                       Number(voucher.quantity) *
